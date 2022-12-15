@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "noEmit": true,
+    "strictNullChecks": true
+  },
+  "references": [
+    {
+      "path": "./packages/greetings"
+    },
+    {
+      "path": "./packages/signatures"
+    },
+    {
+      "path": "./packages/letter-crafter"
+    }
+  ],
+  "files": [],
+  "include": ["scripts"]
+}
