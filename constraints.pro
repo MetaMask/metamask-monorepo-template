@@ -269,15 +269,14 @@ gen_enforced_dependency(WorkspaceCwd, DependencyIdent, OtherDependencyRange, Dep
   DependencyRange \= OtherDependencyRange,
   npm_version_range_out_of_sync(DependencyRange, OtherDependencyRange).
 
-% If a dependency is listed under "dependencies", it must not be listed under
-% any other "*dependencies" lists. We match on the same dependency range so that
-% if a dependency is listed twice in the same manifest, their versions are
-% synchronized and then this constraint will apply and remove the "right"
-% duplicate.
+% If a dependency is listed under "dependencies", it should not be listed under
+% "devDependencies". We match on the same dependency range so that if a
+% dependency is listed under both lists, their versions are synchronized and
+% then this constraint will apply and remove the "right" duplicate.
 gen_enforced_dependency(WorkspaceCwd, DependencyIdent, null, DependencyType) :-
   workspace_has_dependency(WorkspaceCwd, DependencyIdent, DependencyRange, 'dependencies'),
   workspace_has_dependency(WorkspaceCwd, DependencyIdent, DependencyRange, DependencyType),
-  DependencyType \= 'dependencies'.
+  DependencyType == 'devDependencies'.
 
 % All packages must specify a minimum Node version of 14.
 gen_enforced_field(WorkspaceCwd, 'engines.node', '>=14.0.0').
