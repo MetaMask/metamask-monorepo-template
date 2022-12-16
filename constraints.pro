@@ -289,7 +289,7 @@ gen_enforced_field(WorkspaceCwd, 'publishConfig.access', 'public') :-
 gen_enforced_field(WorkspaceCwd, 'publishConfig.access', null) :-
   workspace_field(WorkspaceCwd, 'private', true).
 
-% All publisheed packages are available on the NPM registry.
+% All published packages are available on the NPM registry.
 gen_enforced_field(WorkspaceCwd, 'publishConfig.registry', 'https://registry.npmjs.org/') :-
   \+ workspace_field(WorkspaceCwd, 'private', true).
 % Non-published packages do not need to specify an NPM registry.
