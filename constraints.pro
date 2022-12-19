@@ -175,8 +175,8 @@ gen_enforced_field(WorkspaceCwd, 'bugs.url', CorrectBugsUrl) :-
   workspace_field(WorkspaceCwd, 'repository.url', RepoUrl),
   repo_name(RepoUrl, RepoName),
   atomic_list_concat(['https://github.com/MetaMask/', RepoName, '/issues'], CorrectBugsUrl).
-% Non-published packages do not have a bugs URL.
-gen_enforced_field(WorkspaceCwd, 'bugs.url', null) :-
+% Non-published packages must not have a bugs section.
+gen_enforced_field(WorkspaceCwd, 'bugs', null) :-
   workspace_field(WorkspaceCwd, 'private', true).
 
 % All packages must specify Git as the repository type.
@@ -190,6 +190,7 @@ gen_enforced_field(WorkspaceCwd, 'repository.url', 'https://github.com/MetaMask/
 % root package.
 gen_enforced_field(WorkspaceCwd, 'repository.url', RepoUrl) :-
   workspace_field('.', 'repository.url', RepoUrl),
+  repo_name(RepoUrl, _).
   WorkspaceCwd \= '.'.
 
 % The license for all published packages must be MIT.
@@ -213,7 +214,8 @@ gen_enforced_field(WorkspaceCwd, 'types', './dist/index.d.ts') :-
 gen_enforced_field(WorkspaceCwd, 'types', null) :-
   workspace_field(WorkspaceCwd, 'private', true).
 
-% The list of files included in published packages must be everything in `dist/`.
+% The list of files included in published packages must only include files
+% generated during the build step.
 gen_enforced_field(WorkspaceCwd, 'files', ['dist/']) :-
   \+ workspace_field(WorkspaceCwd, 'private', true).
 % The root package must specify an empty set of published files. (This is
@@ -221,10 +223,6 @@ gen_enforced_field(WorkspaceCwd, 'files', ['dist/']) :-
 % as otherwise the `node/no-unpublished-require` ESLint rule will disallow it.)
 gen_enforced_field(WorkspaceCwd, 'files', []) :-
   WorkspaceCwd = '.'.
-% All other non-published packages must not specify a set of published files.
-gen_enforced_field(WorkspaceCwd, 'files', null) :-
-  workspace_field(WorkspaceCwd, 'private', true),
-  WorkspaceCwd \= '.'.
 
 % All non-root packages must have the same "build:docs" script.
 gen_enforced_field(WorkspaceCwd, 'scripts.build:docs', 'typedoc') :-
@@ -284,13 +282,10 @@ gen_enforced_field(WorkspaceCwd, 'engines.node', '>=14.0.0').
 % All published packages are public.
 gen_enforced_field(WorkspaceCwd, 'publishConfig.access', 'public') :-
   \+ workspace_field(WorkspaceCwd, 'private', true).
-% Non-published packages do not need to specify their published access level.
-gen_enforced_field(WorkspaceCwd, 'publishConfig.access', null) :-
-  workspace_field(WorkspaceCwd, 'private', true).
-
 % All published packages are available on the NPM registry.
 gen_enforced_field(WorkspaceCwd, 'publishConfig.registry', 'https://registry.npmjs.org/') :-
   \+ workspace_field(WorkspaceCwd, 'private', true).
-% Non-published packages do not need to specify an NPM registry.
-gen_enforced_field(WorkspaceCwd, 'publishConfig.registry', null) :-
+% Non-published packages do not need to specify any publishing settings
+% whatsoever.
+gen_enforced_field(WorkspaceCwd, 'publishConfig', null) :-
   workspace_field(WorkspaceCwd, 'private', true).
