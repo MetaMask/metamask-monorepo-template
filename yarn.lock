@@ -2352,9 +2352,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@metamask/core-monorepo@workspace:.":
+"@metamask/metamask-module-template@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@metamask/core-monorepo@workspace:."
+  resolution: "@metamask/metamask-module-template@workspace:."
   dependencies:
     "@babel/core": "npm:^7.23.5"
     "@babel/plugin-transform-modules-commonjs": "npm:^7.23.3"
