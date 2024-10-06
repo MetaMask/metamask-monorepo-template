@@ -2,6 +2,16 @@
 
 MetaMask Monorepo Template
 
+## Template Instructions
+
+Follow these instructions when using this template.
+
+Find and replace:
+
+- `MetaMask Monorepo Template` (title case)
+- `metamask monorepo template (lower case)
+- `metamask-monorepo-template` (kebab-case)
+
 ## Modules
 
 This repository contains the following packages [^fn1]:

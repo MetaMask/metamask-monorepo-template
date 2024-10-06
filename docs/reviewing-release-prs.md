@@ -154,7 +154,7 @@ If there are any packages being bumped whose new versions do not align to this s
 
 Next, look over the changelogs of the packages which will be released to ensure that they are well formed and that they list all changes that will be released.
 
-The [Keep a Changelog](https://keepachangelog.com/) specification defines a standard format for changelogs, and all MetaMask repositories, including the core monorepo, follow this format.
+The [Keep a Changelog](https://keepachangelog.com/) specification defines a standard format for changelogs, and all MetaMask repositories, including the metamask module template, follow this format.
 
 One tenet of Keep a Changelog is that **changelog entries should not be mere regurgitations of commit messages or pull request titles**. An entry like "Support advanced gas fees in TransactionController" is adequate to understand the content of a commit, but it contains insufficient detail for a changelog. Keep in mind that since consumers use software through an interface, they want to know how that interface will change if they upgrade to a new version. So, a changelog entry should list specifics, i.e., the classes, methods, functions, and types that have been added, updated, or removed. If a version contains breaking changes, the changelog should explain how consumers who are upgrading to that version will need to adapt to the changes. Either way, consumers should not have to click through pull requests and scan commit diffs to obtain this information.
 
