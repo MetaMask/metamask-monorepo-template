@@ -13,6 +13,7 @@ This repository contains the following packages [^fn1]:
 
 <!-- start package list -->
 
+- [`@metamask/metamask-module-template`](packages/metamask-module-template)
 - [`@metamask/metamask-module-template`](packages/accounts-controller)
 - [`@metamask/metamask-module-template`](packages/address-book-controller)
 - [`@metamask/announcement-controller`](packages/announcement-controller)
