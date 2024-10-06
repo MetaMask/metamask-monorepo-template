@@ -68,7 +68,7 @@ If you're developing your project locally and want to test changes to a package,
    3. Add a line to this section that mirrors the dependency entry on the left-hand side and points to the local path on the right-hand side:
 
       ```
-      "@metamask/<PACKAGE_NAME>@<PUBLISHED_VERSION_RANGE>": "file:<PATH_TO_CORE>/packages/<PACKAGE_NAME>"
+      "@metamask/<PACKAGE_NAME>@<PUBLISHED_VERSION_RANGE>": "file:<PATH_TO_METAMASK_MONOREPO_TEMPLATE>/packages/<PACKAGE_NAME>"
       ```
 
       > **Example:**

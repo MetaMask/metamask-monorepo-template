@@ -11,6 +11,7 @@ Find and replace all instances of "MetaMask Monorepo Template" with the correct 
 - `MetaMask Monorepo Template` (Title Case)
 - `metamask monorepo template` (lowercase)
 - `metamask-monorepo-template` (kebab-case)
+- `METAMASK_MONOREPO_TEMPLATE` (SNAKE_CASE)
 
 ## Modules
 
