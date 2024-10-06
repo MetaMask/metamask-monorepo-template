@@ -1,0 +1,26 @@
+export type {
+  AccountsControllerState,
+  AccountsControllerGetStateAction,
+  AccountsControllerSetSelectedAccountAction,
+  AccountsControllerSetAccountNameAction,
+  AccountsControllerListAccountsAction,
+  AccountsControllerListMultichainAccountsAction,
+  AccountsControllerUpdateAccountsAction,
+  AccountsControllerGetSelectedAccountAction,
+  AccountsControllerGetSelectedMultichainAccountAction,
+  AccountsControllerGetAccountByAddressAction,
+  AccountsControllerGetAccountAction,
+  AccountsControllerGetNextAvailableAccountNameAction,
+  AccountsControllerUpdateAccountMetadataAction,
+  AccountsControllerActions,
+  AccountsControllerChangeEvent,
+  AccountsControllerSelectedAccountChangeEvent,
+  AccountsControllerSelectedEvmAccountChangeEvent,
+  AccountsControllerAccountAddedEvent,
+  AccountsControllerAccountRemovedEvent,
+  AccountsControllerAccountRenamedEvent,
+  AccountsControllerEvents,
+  AccountsControllerMessenger,
+} from './AccountsController';
+export { AccountsController } from './AccountsController';
+export { keyringTypeToName, getUUIDFromAddressOfNormalAccount } from './utils';
