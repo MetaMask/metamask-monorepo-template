@@ -14,9 +14,6 @@ This repository contains the following packages [^fn1]:
 <!-- start package list -->
 
 - [`@metamask/metamask-module-template`](packages/metamask-module-template)
-- [`@metamask/approval-controller`](packages/approval-controller)
-- [`@metamask/assets-controllers`](packages/assets-controllers)
-- [`@metamask/base-controller`](packages/base-controller)
 - [`@metamask/build-utils`](packages/build-utils)
 - [`@metamask/chain-controller`](packages/chain-controller)
 - [`@metamask/composable-controller`](packages/composable-controller)
@@ -56,9 +53,6 @@ Or, in graph form [^fn1]:
 %%{ init: { 'flowchart': { 'curve': 'bumpX' } } }%%
 graph LR;
 linkStyle default opacity:0.5
-  approval_controller(["@metamask/approval-controller"]);
-  assets_controllers(["@metamask/assets-controllers"]);
-  base_controller(["@metamask/base-controller"]);
   build_utils(["@metamask/build-utils"]);
   chain_controller(["@metamask/chain-controller"]);
   composable_controller(["@metamask/composable-controller"]);

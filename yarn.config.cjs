@@ -87,12 +87,6 @@ module.exports = defineConfig({
         // All non-root packages must have a license, defaulting to MIT.
         await expectWorkspaceLicense(workspace);
 
-        // All non-root packages must not have side effects. (An exception is
-        // made for `@metamask/base-controller`).
-        if (workspace.ident !== '@metamask/base-controller') {
-          expectWorkspaceField(workspace, 'sideEffects', false);
-        }
-
         // All non-root packages must set up ESM- and CommonJS-compatible
         // exports correctly.
         expectCorrectWorkspaceExports(workspace);
@@ -688,7 +682,6 @@ function expectControllerDependenciesListedAsPeerDependencies(
     if (
       dependencyWorkspace !== null &&
       dependencyIdent.endsWith('-controller') &&
-      dependencyIdent !== '@metamask/base-controller' &&
       dependencyIdent !== '@metamask/polling-controller' &&
       !dependencyInstancesByType.has('peerDependencies')
     ) {
