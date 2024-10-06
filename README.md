@@ -13,7 +13,7 @@ This repository contains the following packages [^fn1]:
 
 <!-- start package list -->
 
-- [`@metamask/accounts-controller`](packages/accounts-controller)
+- [`@metamask/metamask-module-template`](packages/accounts-controller)
 - [`@metamask/address-book-controller`](packages/address-book-controller)
 - [`@metamask/announcement-controller`](packages/announcement-controller)
 - [`@metamask/approval-controller`](packages/approval-controller)
@@ -58,7 +58,7 @@ Or, in graph form [^fn1]:
 %%{ init: { 'flowchart': { 'curve': 'bumpX' } } }%%
 graph LR;
 linkStyle default opacity:0.5
-  accounts_controller(["@metamask/accounts-controller"]);
+  accounts_controller(["@metamask/metamask-module-template"]);
   address_book_controller(["@metamask/address-book-controller"]);
   announcement_controller(["@metamask/announcement-controller"]);
   approval_controller(["@metamask/approval-controller"]);

@@ -1171,7 +1171,7 @@ class AccountsController extends BaseController<
 
 /* === packages/preferences-controller/src/PreferencesController.ts === */
 
-import { AccountsControllerGetStateAction } from '@metamask/accounts-controller';
+import { AccountsControllerGetStateAction } from '@metamask/metamask-module-template';
 
 type AllowedActions = AccountsControllerGetStateAction;
 
@@ -1296,7 +1296,7 @@ class AccountsController extends BaseController</* ... */> {
 import type {
   AccountsControllerGetActiveAccountsAction,
   AccountsControllerGetInactiveAccountsAction,
-} from '@metamask/accounts-controller';
+} from '@metamask/metamask-module-template';
 
 type AllowedActions =
   | AccountsControllerGetActiveAccountsAction
@@ -1334,7 +1334,7 @@ class TokensController extends BaseController</* ... */> {
 /* === Client repo: selectors.ts  === */
 
 import { createSelector } from 'reselect';
-import { accountsControllerSelectors } from '@metamask/accounts-controller';
+import { accountsControllerSelectors } from '@metamask/metamask-module-template';
 
 const selectAccountsControllerState = (state) => {
   return state.engine.backgroundState.AccountsController;
@@ -1395,8 +1395,8 @@ export type AccountsControllerMessenger = RestrictedControllerMessenger<
 
 import type {
   AccountsControllerGetStateAction,
-} from '@metamask/accounts-controller';
-import { accountsControllerSelectors } from '@metamask/accounts-controller';
+} from '@metamask/metamask-module-template';
+import { accountsControllerSelectors } from '@metamask/metamask-module-template';
 
 type AllowedActions = AccountsControllerGetStateAction;
 
@@ -1435,7 +1435,7 @@ class TokensController extends BaseController</* ... */> {
 /* === Client repo: selectors.ts  === */
 
 import { createSelector } from 'reselect';
-import { accountsControllerSelectors } from '@metamask/accounts-controller';
+import { accountsControllerSelectors } from '@metamask/metamask-module-template';
 
 const selectAccountsControllerState = (state) => {
   return state.engine.backgroundState.AccountsController;
