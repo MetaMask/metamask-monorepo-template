@@ -17,17 +17,6 @@ module.exports = {
       extends: ['@metamask/eslint-config-jest'],
     },
     {
-      // These files are test helpers, not tests. We still use the Jest ESLint
-      // config here to ensure that ESLint expects a test-like environment, but
-      // various rules meant just to apply to tests have been disabled.
-      files: ['!*.test.{ts,js}'],
-      rules: {
-        'jest/no-export': 'off',
-        'jest/require-top-level-describe': 'off',
-        'jest/no-if': 'off',
-      },
-    },
-    {
       files: ['*.js', '*.cjs'],
       parserOptions: {
         sourceType: 'script',
@@ -42,21 +31,7 @@ module.exports = {
         project: ['./tsconfig.packages.json'],
       },
       rules: {
-        // Enable rules that are disabled in `@metamask/eslint-config-typescript`
         '@typescript-eslint/no-explicit-any': 'error',
-
-        // TODO: auto-fix breaks stuff
-        '@typescript-eslint/promise-function-async': 'off',
-
-        // TODO: re-enable most of these rules
-        '@typescript-eslint/no-unnecessary-type-assertion': 'off',
-        '@typescript-eslint/unbound-method': 'off',
-        '@typescript-eslint/prefer-enum-initializers': 'off',
-        '@typescript-eslint/prefer-nullish-coalescing': 'off',
-        '@typescript-eslint/prefer-optional-chain': 'off',
-        '@typescript-eslint/prefer-reduce-type-parameter': 'off',
-        'no-restricted-syntax': 'off',
-        'no-restricted-globals': 'off',
       },
     },
     {
@@ -67,45 +42,24 @@ module.exports = {
       },
     },
     {
-      files: ['scripts/*.ts'],
+      files: ['scripts/**/*.ts'],
       rules: {
+        'import/no-unassigned-import': 'off',
+        'n/no-sync': 'off',
         // All scripts will have shebangs.
         'n/shebang': 'off',
       },
     },
-    {
-      files: ['**/jest.environment.js'],
-      rules: {
-        // These files run under Node, and thus `require(...)` is expected.
-        'n/global-require': 'off',
-      },
-    },
   ],
   rules: {
-    // Left disabled because various properties throughough this repo are snake_case because the
-    // names come from external sources or must comply with standards
-    // e.g. `txreceipt_status`, `signTypedData_v4`, `token_id`
     camelcase: 'off',
     'id-length': 'off',
-
-    // TODO: re-enble most of these rules
-    '@typescript-eslint/naming-convention': 'off',
-    'function-paren-newline': 'off',
-    'id-denylist': 'off',
-    'implicit-arrow-linebreak': 'off',
-    'import/no-anonymous-default-export': 'off',
-    'import/no-unassigned-import': 'off',
-    'lines-around-comment': 'off',
-    'n/no-sync': 'off',
-    'no-async-promise-executor': 'off',
-    'no-case-declarations': 'off',
-    'no-invalid-this': 'off',
-    'no-negated-condition': 'off',
-    'no-new': 'off',
-    'no-param-reassign': 'off',
-    'no-restricted-syntax': 'off',
-    radix: 'off',
-    'require-atomic-updates': 'off',
+    'no-restricted-syntax': [
+      'error',
+      'ForInStatement',
+      'LabeledStatement',
+      'WithStatement',
+    ],
     'jsdoc/match-description': [
       'off',
       { matchDescription: '^[A-Z`\\d_][\\s\\S]*[.?!`>)}]$' },
