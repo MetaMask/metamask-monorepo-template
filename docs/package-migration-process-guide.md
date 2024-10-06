@@ -7,7 +7,7 @@ This document outlines the process for migrating a MetaMask library into the met
 ### **[PR#1]** 1. Add the following migration notice to the README
 
 ```markdown
-<table><tr><td><p align="center"><b>⚠️ PLEASE READ ⚠️</b></p><p align="center">This package is currently being migrated to our <a href="https://github.com/MetaMask/core"><code>core</code></a> monorepo. Please do not make any commits to this repository while this migration is taking place, as they will not be transferred over. Also, please re-open PRs that are under active development in the metamask module template.</p></td></tr></table>
+<table><tr><td><p align="center"><b>⚠️ PLEASE READ ⚠️</b></p><p align="center">This package is currently being migrated to our <a href="https://github.com/MetaMask/metamask-monorepo-template"><code>metamask-monorepo-template</code></a> monorepo. Please do not make any commits to this repository while this migration is taking place, as they will not be transferred over. Also, please re-open PRs that are under active development in the metamask module template.</p></td></tr></table>
 ```
 
 - [Example PR](https://github.com/MetaMask/eth-json-rpc-provider/pull/38)
@@ -22,9 +22,9 @@ This document outlines the process for migrating a MetaMask library into the met
 
 ### **[PR#2]** 4. Align dependency versions and TypeScript, ESLint, Prettier configurations with the metamask module template
 
-- If the dependency versions of the migration target are ahead of core, consider updating the core dependencies first.
+- If the dependency versions of the migration target are ahead of metamask monorepo template, consider updating the metamask monorepo template dependencies first.
 - Apply the configurations of the metamask module template to the source repo files.
-  - Preserve any TypeScript compiler flags that are enabled in the source repo but not in core.
+  - Preserve any TypeScript compiler flags that are enabled in the source repo but not in metamask monorepo template.
 - Resolve any errors or issues resulting from these changes.
 - [Example PR](https://github.com/MetaMask/eth-json-rpc-provider/pull/28)
 
@@ -45,7 +45,7 @@ This document outlines the process for migrating a MetaMask library into the met
 
 ## Phase B: **Staging** from the metamask module template's `merged-packages/` directory
 
-### **[PR#6]** 1. Migrate the source repo's git history into the `merged-packages/` temporary directory in core
+### **[PR#6]** 1. Migrate the source repo's git history into the `merged-packages/` temporary directory in metamask monorepo template
 
 #### Steps
 
@@ -54,7 +54,7 @@ This document outlines the process for migrating a MetaMask library into the met
 3. Clone the repo for the library you want to migrate: `git clone https://github.com/MetaMask/<repo-name>` (e.g. `<repo-name>` = `utils`). Do **NOT** use an existing clone.
 4. `cd` into the newly cloned repo.
 5. Run `git filter-repo --to-subdirectory-filter merged-packages/<package-name>` (e.g. `<package-name>` = `utils`). This will rewrite all history to move all files to `merged-packages/<package-name>`. (This is why we're making a fresh clone in a temporary directory — this action is irreversible.)
-6. `cd` to wherever you keep the `core` repo on your machine.
+6. `cd` to wherever you keep the `metamask-monorepo-template` repo on your machine.
 7. Add the library as a remote: `git remote add <package-name> /tmp/<package-name>`.
 8. Fetch history: `git fetch <package-name> --no-tags`
 9. Make a new branch: `git checkout -b migrate-<package-name>`
@@ -86,7 +86,7 @@ This document outlines the process for migrating a MetaMask library into the met
 
 ### 3. Port tags
 
-- Following [these instructions](./migrate-tags.md), use the `scripts/migrate-tags.sh` tool to port the source repo's release tags onto the migrated git history in core.
+- Following [these instructions](./migrate-tags.md), use the `scripts/migrate-tags.sh` tool to port the source repo's release tags onto the migrated git history in metamask monorepo template.
 
 1. Port the tags locally.
 
@@ -94,7 +94,7 @@ This document outlines the process for migrating a MetaMask library into the met
 
 2. Create a fork of the metamask module template for testing, and push the ported tags to the test fork.
 
-- **Do not run the script against `MetaMask/core` before testing it on a fork.**
+- **Do not run the script against `MetaMask/metamask-monorepo-template` before testing it on a fork.**
 
 3. From the fork, verify that the tag diff links in CHANGELOG are working.
 
@@ -181,14 +181,14 @@ This document outlines the process for migrating a MetaMask library into the met
 - Create a separate issue for resolving the marked errors as soon as the migration is completed.
   - e.g. https://github.com/MetaMask/core/issues/1823
 
-### 5. Record changes made to any core package in its CHANGELOG, under the `## [Unreleased]` heading
+### 5. Record changes made to any metamask monorepo template package in its CHANGELOG, under the `## [Unreleased]` heading
 
 - CHANGELOG entries should be recorded in the migration target's downstream packages for version bumps to the migration target's current release.
 - [Example PR](https://github.com/MetaMask/core/pull/2003/files): this step can be performed either as a part of Phase C, or in a separate, subsequent PR.
 
 ### 6. Finalize merge
 
-- Check that all tests are passing in all subpackages of core and CI.
+- Check that all tests are passing in all subpackages of metamask monorepo template and CI.
 - Double-check that dependency version bumps or other changes made to main while the PR was open are correctly merged and reflected.
 
 ## Phase D: Clean-up and Release
@@ -197,16 +197,16 @@ This document outlines the process for migrating a MetaMask library into the met
 
 1. Transfer open issues from the source repo into the metamask module template using GitHub's `Transfer issue` feature (prepend the title with the package name: `[<package-name>]`).
 
-2. For open PRs in the source repo, lock conversation (do not provide a reason), and leave a comment requesting that authors reopen the PR in core with a link pointing to the discussion in the original PR. For important PRs, manually migrate into core or create tickets for follow-up.
+2. For open PRs in the source repo, lock conversation (do not provide a reason), and leave a comment requesting that authors reopen the PR in metamask monorepo template with a link pointing to the discussion in the original PR. For important PRs, manually migrate into metamask monorepo template or create tickets for follow-up.
 
 ```markdown
-This library has now been migrated into the [metamask module template](https://github.com/metamask/core/). This PR has been locked and this repo will be archived shortly. Going forward, releases of this library will only include changes made in the metamask module template.
+This library has now been migrated into the [metamask module template](https://github.com/metamask/metamask-monorepo-template/). This PR has been locked and this repo will be archived shortly. Going forward, releases of this library will only include changes made in the metamask module template.
 
-- Please push this branch to core and open a new PR there.
+- Please push this branch to metamask monorepo template and open a new PR there.
 - Optionally, add a link pointing to the discussion in this PR to provide context.
 ```
 
-3. **[PR#14]** Leave a note in the source repo's README announcing the migration and pointing to core.
+3. **[PR#14]** Leave a note in the source repo's README announcing the migration and pointing to metamask monorepo template.
 
 - This note should replace the notice added in step A-1.
 
@@ -217,10 +217,14 @@ This library has now been migrated into the [metamask module template](https://g
       <p align="center"><b>⚠️ PLEASE READ ⚠️</b></p>
       <p align="center">
         This package has been migrated to our
-        <a href="https://github.com/MetaMask/core"><code>core</code></a>
+        <a href="https://github.com/MetaMask/metamask-monorepo-template"
+          ><code>metamask-monorepo-template</code></a
+        >
         monorepo, and this repository has been archived. Please note that all
         future development and feature releases will take place in the
-        <a href="https://github.com/MetaMask/core"><code>core</code></a>
+        <a href="https://github.com/MetaMask/metamask-monorepo-template"
+          ><code>metamask-monorepo-template</code></a
+        >
         repository.
       </p>
     </td>
@@ -232,11 +236,11 @@ This library has now been migrated into the [metamask module template](https://g
 
 - Contact a [**maintainer**](https://github.com/orgs/MetaMask/teams/engineering?query=role%3Amaintainer) to perform this step.
 
-### Core
+### Metamask Monorepo Template
 
 1. **[PR#15]** Add migration target to the list of packages in the README as well as the dependency graph in the README by running `yarn update-readme-content`.
 2. Fix downstream errors that were marked with `@ts-expect-error TODO:` during the migration process.
 
 - If possible, perform this step before the first post-migration release of the migrated package.
 
-3. **[PR#16]** Use the `yarn create-release-branch` tool to publish a release of core with a new version for the migrated package and any updated downstream packages.
+3. **[PR#16]** Use the `yarn create-release-branch` tool to publish a release of metamask monorepo template with a new version for the migrated package and any updated downstream packages.
