@@ -473,17 +473,7 @@ async function expectWorkspaceLicense(workspace) {
     workspace.manifest.license === undefined
   ) {
     expectWorkspaceField(workspace, 'license', 'MIT');
-  } else if (
-    [
-      '@metamask/json-rpc-engine',
-      '@metamask/json-rpc-middleware-stream',
-      '@metamask/permission-log-controller',
-      '@metamask/eth-json-rpc-provider',
-    ].includes(workspace.manifest.name)
-  ) {
-    expectWorkspaceField(workspace, 'license');
   }
-}
 
 /**
  * Expect that the workspace has exports set up correctly.

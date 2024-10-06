@@ -13,14 +13,14 @@ module.exports = {
   ],
   overrides: [
     {
-      files: ['*.test.{ts,js}', '**/tests/**/*.{ts,js}'],
+      files: ['*.test.{ts,js}'],
       extends: ['@metamask/eslint-config-jest'],
     },
     {
       // These files are test helpers, not tests. We still use the Jest ESLint
       // config here to ensure that ESLint expects a test-like environment, but
       // various rules meant just to apply to tests have been disabled.
-      files: ['**/tests/**/*.{ts,js}', '!*.test.{ts,js}'],
+      files: ['!*.test.{ts,js}'],
       rules: {
         'jest/no-export': 'off',
         'jest/require-top-level-describe': 'off',
@@ -57,12 +57,6 @@ module.exports = {
         '@typescript-eslint/prefer-reduce-type-parameter': 'off',
         'no-restricted-syntax': 'off',
         'no-restricted-globals': 'off',
-      },
-    },
-    {
-      files: ['tests/setupAfterEnv/matchers.ts'],
-      parserOptions: {
-        sourceType: 'script',
       },
     },
     {
