@@ -1,8 +1,0 @@
-0000000000000000000000000000000000000000 ecd69df66dc4e45365602ca83a974725307fc918 georgewrmarshall <george.marshall@consensys.net> 1726681855 -0700	clone: from github.com:MetaMask/core.git
-ecd69df66dc4e45365602ca83a974725307fc918 ecd69df66dc4e45365602ca83a974725307fc918 georgewrmarshall <george.marshall@consensys.net> 1726682197 -0700	checkout: moving from main to release/205.0.0
-ecd69df66dc4e45365602ca83a974725307fc918 0ec599534cb087f8bbff85cf37ca890d71fef383 georgewrmarshall <george.marshall@consensys.net> 1726682199 -0700	commit: Initialize Release 205.0.0
-0ec599534cb087f8bbff85cf37ca890d71fef383 f75a472276dbeba70eca7c408d6df0fffbf860d6 georgewrmarshall <george.marshall@consensys.net> 1726682222 -0700	commit: Update Release 205.0.0
-f75a472276dbeba70eca7c408d6df0fffbf860d6 ecd69df66dc4e45365602ca83a974725307fc918 georgewrmarshall <george.marshall@consensys.net> 1726694624 -0700	checkout: moving from release/205.0.0 to main
-ecd69df66dc4e45365602ca83a974725307fc918 144f90f99e74e3aa554fcd1e022cecc64818e31c georgewrmarshall <george.marshall@consensys.net> 1727907404 -0700	pull: Fast-forward
-144f90f99e74e3aa554fcd1e022cecc64818e31c 144f90f99e74e3aa554fcd1e022cecc64818e31c georgewrmarshall <george.marshall@consensys.net> 1728060631 -0700	reset: moving to HEAD
-144f90f99e74e3aa554fcd1e022cecc64818e31c 3c15eaf35ba402b6e7d998d71a3aa69f6f26a418 georgewrmarshall <george.marshall@consensys.net> 1728231326 -0700	pull: Fast-forward
