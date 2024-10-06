@@ -6,10 +6,10 @@ MetaMask Monorepo Template
 
 Follow these instructions when using this template.
 
-Find and replace:
+Find and replace all instances of "MetaMask Monorepo Template" with the correct casing as follows:
 
-- `MetaMask Monorepo Template` (title case)
-- `metamask monorepo template (lower case)
+- `MetaMask Monorepo Template` (Title Case)
+- `metamask monorepo template` (lowercase)
 - `metamask-monorepo-template` (kebab-case)
 
 ## Modules
