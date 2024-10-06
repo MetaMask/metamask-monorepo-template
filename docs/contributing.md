@@ -73,10 +73,10 @@ If you're developing your project locally and want to test changes to a package,
 
       > **Example:**
       >
-      > - If your project uses Yarn, `@metamask/controller-utils` is listed in dependencies at `^1.1.4`, and your clone of the `core` repo is at the same level as your project, add the following to `resolutions`:
+      > - If your project uses Yarn, `@metamask/metamask-module-template` is listed in dependencies at `^1.1.4`, and your clone of the `core` repo is at the same level as your project, add the following to `resolutions`:
       >
       >   ```
-      >   "@metamask/controller-utils@^1.1.4": "file:../core/packages/controller-utils"
+      >   "@metamask/metamask-module-template@^1.1.4": "file:../core/packages/metamask-module-template"
       >   ```
 
    4. Run `yarn install`.
@@ -140,10 +140,10 @@ To use a preview build for a package within a project, you need to override the 
 
    > **Example:**
    >
-   > - If your project uses Yarn, `@metamask/controller-utils` is listed in dependencies at `^1.1.4`, and you want to use the preview version `1.2.3-preview-e2df9b4`, add the following to `resolutions`:
+   > - If your project uses Yarn, `@metamask/metamask-module-template` is listed in dependencies at `^1.1.4`, and you want to use the preview version `1.2.3-preview-e2df9b4`, add the following to `resolutions`:
    >
    >   ```
-   >   "@metamask/controller-utils@^1.1.4": "npm:@metamask-previews/controller-utils@1.2.3-preview-e2df9b4"
+   >   "@metamask/metamask-module-template@^1.1.4": "npm:@metamask-previews/metamask-module-template@1.2.3-preview-e2df9b4"
    >   ```
 
 4. Run `yarn install`.

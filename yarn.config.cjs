@@ -682,7 +682,6 @@ function expectControllerDependenciesListedAsPeerDependencies(
     if (
       dependencyWorkspace !== null &&
       dependencyIdent.endsWith('-controller') &&
-      dependencyIdent !== '@metamask/polling-controller' &&
       !dependencyInstancesByType.has('peerDependencies')
     ) {
       const dependencyWorkspaceVersion = new semver.SemVer(

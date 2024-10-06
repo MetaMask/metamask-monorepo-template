@@ -14,34 +14,6 @@ This repository contains the following packages [^fn1]:
 <!-- start package list -->
 
 - [`@metamask/metamask-module-template`](packages/metamask-module-template)
-- [`@metamask/build-utils`](packages/build-utils)
-- [`@metamask/chain-controller`](packages/chain-controller)
-- [`@metamask/composable-controller`](packages/composable-controller)
-- [`@metamask/controller-utils`](packages/controller-utils)
-- [`@metamask/ens-controller`](packages/ens-controller)
-- [`@metamask/eth-json-rpc-provider`](packages/eth-json-rpc-provider)
-- [`@metamask/gas-fee-controller`](packages/gas-fee-controller)
-- [`@metamask/json-rpc-engine`](packages/json-rpc-engine)
-- [`@metamask/json-rpc-middleware-stream`](packages/json-rpc-middleware-stream)
-- [`@metamask/keyring-controller`](packages/keyring-controller)
-- [`@metamask/logging-controller`](packages/logging-controller)
-- [`@metamask/message-manager`](packages/message-manager)
-- [`@metamask/name-controller`](packages/name-controller)
-- [`@metamask/network-controller`](packages/network-controller)
-- [`@metamask/notification-controller`](packages/notification-controller)
-- [`@metamask/notification-services-controller`](packages/notification-services-controller)
-- [`@metamask/permission-controller`](packages/permission-controller)
-- [`@metamask/permission-log-controller`](packages/permission-log-controller)
-- [`@metamask/phishing-controller`](packages/phishing-controller)
-- [`@metamask/polling-controller`](packages/polling-controller)
-- [`@metamask/preferences-controller`](packages/preferences-controller)
-- [`@metamask/profile-sync-controller`](packages/profile-sync-controller)
-- [`@metamask/queued-request-controller`](packages/queued-request-controller)
-- [`@metamask/rate-limit-controller`](packages/rate-limit-controller)
-- [`@metamask/selected-network-controller`](packages/selected-network-controller)
-- [`@metamask/signature-controller`](packages/signature-controller)
-- [`@metamask/transaction-controller`](packages/transaction-controller)
-- [`@metamask/user-operation-controller`](packages/user-operation-controller)
 
 <!-- end package list -->
 
@@ -53,34 +25,6 @@ Or, in graph form [^fn1]:
 %%{ init: { 'flowchart': { 'curve': 'bumpX' } } }%%
 graph LR;
 linkStyle default opacity:0.5
-  build_utils(["@metamask/build-utils"]);
-  chain_controller(["@metamask/chain-controller"]);
-  composable_controller(["@metamask/composable-controller"]);
-  controller_utils(["@metamask/controller-utils"]);
-  ens_controller(["@metamask/ens-controller"]);
-  eth_json_rpc_provider(["@metamask/eth-json-rpc-provider"]);
-  gas_fee_controller(["@metamask/gas-fee-controller"]);
-  json_rpc_engine(["@metamask/json-rpc-engine"]);
-  json_rpc_middleware_stream(["@metamask/json-rpc-middleware-stream"]);
-  keyring_controller(["@metamask/keyring-controller"]);
-  logging_controller(["@metamask/logging-controller"]);
-  message_manager(["@metamask/message-manager"]);
-  name_controller(["@metamask/name-controller"]);
-  network_controller(["@metamask/network-controller"]);
-  notification_controller(["@metamask/notification-controller"]);
-  notification_services_controller(["@metamask/notification-services-controller"]);
-  permission_controller(["@metamask/permission-controller"]);
-  permission_log_controller(["@metamask/permission-log-controller"]);
-  phishing_controller(["@metamask/phishing-controller"]);
-  polling_controller(["@metamask/polling-controller"]);
-  preferences_controller(["@metamask/preferences-controller"]);
-  profile_sync_controller(["@metamask/profile-sync-controller"]);
-  queued_request_controller(["@metamask/queued-request-controller"]);
-  rate_limit_controller(["@metamask/rate-limit-controller"]);
-  selected_network_controller(["@metamask/selected-network-controller"]);
-  signature_controller(["@metamask/signature-controller"]);
-  transaction_controller(["@metamask/transaction-controller"]);
-  user_operation_controller(["@metamask/user-operation-controller"]);
   accounts_controller --> base_controller;
   accounts_controller --> keyring_controller;
   address_book_controller --> base_controller;
