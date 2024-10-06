@@ -14,7 +14,6 @@ This repository contains the following packages [^fn1]:
 <!-- start package list -->
 
 - [`@metamask/metamask-module-template`](packages/metamask-module-template)
-- [`@metamask/announcement-controller`](packages/announcement-controller)
 - [`@metamask/approval-controller`](packages/approval-controller)
 - [`@metamask/assets-controllers`](packages/assets-controllers)
 - [`@metamask/base-controller`](packages/base-controller)
@@ -57,9 +56,6 @@ Or, in graph form [^fn1]:
 %%{ init: { 'flowchart': { 'curve': 'bumpX' } } }%%
 graph LR;
 linkStyle default opacity:0.5
-  accounts_controller(["@metamask/metamask-module-template"]);
-  address_book_controller(["@metamask/metamask-module-template"]);
-  announcement_controller(["@metamask/announcement-controller"]);
   approval_controller(["@metamask/approval-controller"]);
   assets_controllers(["@metamask/assets-controllers"]);
   base_controller(["@metamask/base-controller"]);
