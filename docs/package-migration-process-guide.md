@@ -7,7 +7,7 @@ This document outlines the process for migrating a MetaMask library into the cor
 ### **[PR#1]** 1. Add the following migration notice to the README
 
 ```markdown
-<table><tr><td><p align="center"><b>⚠️ PLEASE READ ⚠️</b></p><p align="center">This package is currently being migrated to our <a href="https://github.com/MetaMask/core"><code>core</code></a> monorepo. Please do not make any commits to this repository while this migration is taking place, as they will not be transferred over. Also, please re-open PRs that are under active development in the core repo.</p></td></tr></table>
+<table><tr><td><p align="center"><b>⚠️ PLEASE READ ⚠️</b></p><p align="center">This package is currently being migrated to our <a href="https://github.com/MetaMask/core"><code>core</code></a> monorepo. Please do not make any commits to this repository while this migration is taking place, as they will not be transferred over. Also, please re-open PRs that are under active development in the monorepo template.</p></td></tr></table>
 ```
 
 - [Example PR](https://github.com/MetaMask/eth-json-rpc-provider/pull/38)
@@ -59,7 +59,7 @@ This document outlines the process for migrating a MetaMask library into the cor
 8. Fetch history: `git fetch <package-name> --no-tags`
 9. Make a new branch: `git checkout -b migrate-<package-name>`
 10. Merge the library into the monorepo: `git merge --allow-unrelated-histories <package-name>/<primary-branch>` (e.g. `<primary-branch>` = `main`)
-11. Open a pull request in the core repo that reflects the above changes.
+11. Open a pull request in the monorepo template that reflects the above changes.
 
 > [!WARNING]
 >
@@ -73,9 +73,9 @@ This document outlines the process for migrating a MetaMask library into the cor
 
 - [Example PR](https://github.com/MetaMask/core/pull/1872)
 
-### **[PR#7]** 2. Update the CHANGELOG tag diff links so that they follow the core repo's tag naming convention
+### **[PR#7]** 2. Update the CHANGELOG tag diff links so that they follow the monorepo template's tag naming convention
 
-- The core repo tags for non-root packages should be formatted as: `<package-name>@[version-number]`.
+- The monorepo template tags for non-root packages should be formatted as: `<package-name>@[version-number]`.
   - For all releases following the migration, the package name should be prepended with the `@metamask/` namespace.
 - Make updates to the CHANGELOG tag diff links so that they follow this naming scheme:
   1. Navigate to `merged-packages/<package-name>`
@@ -101,9 +101,9 @@ This document outlines the process for migrating a MetaMask library into the cor
 - Note: The diff between any tag before migration and any tag after will always include the entire history of the monorepo. This is due to the nature of the process we use for git history migration, and is a WONTFIX issue.
 - The correct diff can be derived using `git log --ancestry-path`, but GitHub compare links don't support --ancestry-path.
 
-4. Push the ported tags to the core repo.
+4. Push the ported tags to the monorepo template.
 
-5. From the core repo, verify that the tag diff links in CHANGELOG are working.
+5. From the monorepo template, verify that the tag diff links in CHANGELOG are working.
 
 6. Manually create tags for release commits that were never tagged in the original repo.
 
@@ -200,7 +200,7 @@ This document outlines the process for migrating a MetaMask library into the cor
 2. For open PRs in the source repo, lock conversation (do not provide a reason), and leave a comment requesting that authors reopen the PR in core with a link pointing to the discussion in the original PR. For important PRs, manually migrate into core or create tickets for follow-up.
 
 ```markdown
-This library has now been migrated into the [core monorepo](https://github.com/metamask/core/). This PR has been locked and this repo will be archived shortly. Going forward, releases of this library will only include changes made in the core repo.
+This library has now been migrated into the [core monorepo](https://github.com/metamask/core/). This PR has been locked and this repo will be archived shortly. Going forward, releases of this library will only include changes made in the monorepo template.
 
 - Please push this branch to core and open a new PR there.
 - Optionally, add a link pointing to the discussion in this PR to provide context.

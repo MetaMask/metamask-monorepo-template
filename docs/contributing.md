@@ -76,7 +76,7 @@ If you're developing your project locally and want to test changes to a package,
       > - If your project uses Yarn, `@metamask/metamask-module-template` is listed in dependencies at `^1.1.4`, and your clone of the `core` repo is at the same level as your project, add the following to `resolutions`:
       >
       >   ```
-      >   "@metamask/metamask-module-template@^1.1.4": "file:../core/packages/metamask-module-template"
+      >   "@metamask/metamask-module-template@^1.1.4": "file:../metamask-monorepo-template/packages/metamask-module-template"
       >   ```
 
    4. Run `yarn install`.
