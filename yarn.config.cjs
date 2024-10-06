@@ -188,13 +188,22 @@ module.exports = defineConfig({
       );
 
       // If one workspace package (A) lists another workspace package (B) in its
-      // `dependencies`, and B is a controller package, then we need to ensure
+      // `dependencies`, and B is a critical dependency package, then we need to ensure
       // that B is also listed in A's `peerDependencies` and that the version
       // range satisfies the current version of B.
-      expectControllerDependenciesListedAsPeerDependencies(
+      const criticalDependencyPatterns = [
+        // Examples of patterns you might want to use:
+        // /-controller$/u, // for projects that use controllers
+        // /-plugin$/u,     // for projects that use plugins
+        // /-adapter$/u,    // for projects that use adapters
+        // Add any patterns specific to your project architecture
+      ];
+
+      expectCriticalDependenciesListedAsPeerDependencies(
         Yarn,
         workspace,
         dependenciesByIdentAndType,
+        criticalDependencyPatterns,
       );
 
       // The root workspace (and only the root workspace) must specify the Yarn
@@ -468,6 +477,7 @@ async function expectWorkspaceLicense(workspace) {
   ) {
     expectWorkspaceField(workspace, 'license', 'MIT');
   }
+}
 
 /**
  * Expect that the workspace has exports set up correctly.
@@ -663,11 +673,13 @@ function expectDependenciesNotInBothProdAndDev(
  * @param {Workspace} workspace - The workspace to check.
  * @param {Map<string, Map<DependencyType, Dependency>>} dependenciesByIdentAndType - Map of
  * dependency ident to dependency type and dependency.
+ * @param {RegExp[]} criticalDependencyPatterns - Array of patterns to match against dependency ident.
  */
-function expectControllerDependenciesListedAsPeerDependencies(
+function expectCriticalDependenciesListedAsPeerDependencies(
   Yarn,
   workspace,
   dependenciesByIdentAndType,
+  criticalDependencyPatterns = [],
 ) {
   for (const [
     dependencyIdent,
@@ -681,7 +693,9 @@ function expectControllerDependenciesListedAsPeerDependencies(
 
     if (
       dependencyWorkspace !== null &&
-      dependencyIdent.endsWith('-controller') &&
+      criticalDependencyPatterns.some((pattern) =>
+        dependencyIdent.match(pattern),
+      ) &&
       !dependencyInstancesByType.has('peerDependencies')
     ) {
       const dependencyWorkspaceVersion = new semver.SemVer(
