@@ -8,7 +8,6 @@ module.exports = {
     '**/dist',
     '**/docs',
     '**/coverage',
-    'merged-packages',
     'scripts/create-package/package-template',
   ],
   overrides: [
