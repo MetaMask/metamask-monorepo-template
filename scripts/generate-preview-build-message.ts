@@ -1,4 +1,4 @@
-#!yarn ts-node
+#!yarn tsx
 
 import execa from 'execa';
 import fs from 'fs';
@@ -7,7 +7,7 @@ import path from 'path';
 /**
  * Write a preview build message to the path "preview-build-message.txt".
  */
-async function main() {
+async function main(): Promise<void> {
   const packageMap: Record<string, string> = {};
 
   const { stdout } = await execa('yarn', [

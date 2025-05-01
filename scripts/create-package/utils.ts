@@ -22,10 +22,9 @@ const allPlaceholdersRegex = new RegExp(
 
 // Our lint config really hates this, but it works.
 // eslint-disable-next-line
-const prettierRc = require(path.join(
-  REPO_ROOT,
-  '.prettierrc.js',
-)) as PrettierOptions;
+const prettierRc = require(
+  path.join(REPO_ROOT, '.prettierrc.js'),
+) as PrettierOptions;
 
 /**
  * The data necessary to create a new package.
@@ -92,7 +91,7 @@ export async function readMonorepoFiles(): Promise<MonorepoFileData> {
 export async function finalizeAndWriteData(
   packageData: PackageData,
   monorepoFileData: MonorepoFileData,
-) {
+): Promise<void> {
   const packagePath = path.join(PACKAGES_PATH, packageData.directoryName);
   if (existsSync(packagePath)) {
     throw new Error(`The package directory already exists: ${packagePath}`);
