@@ -187,10 +187,10 @@ To use a preview build for a package within a project, you need to override the 
 
    > **Example:**
    >
-   > - If your project uses Yarn, `@metamask/controller-utils` is listed in dependencies at `^1.1.4`, and you want to use the preview version `1.2.3-preview-e2df9b4`, add the following to `resolutions`:
+   > - If your project uses Yarn, `@metamask/wallet-utils` is listed in dependencies at `^1.1.4`, and you want to use the preview version `1.2.3-preview-e2df9b4`, add the following to `resolutions`:
    >
    >   ```
-   >   "@metamask/controller-utils@^1.1.4": "npm:@metamask-previews/controller-utils@1.2.3-preview-e2df9b4"
+   >   "@metamask/wallet-utils@^1.1.4": "npm:@metamask-previews/wallet-utils@1.2.3-preview-e2df9b4"
    >   ```
 
 4. Run `yarn install`.
