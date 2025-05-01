@@ -4,8 +4,9 @@
     "noEmit": true
   },
   "references": [
-    { "path": "./packages/auth-network-utils" },
-    { "path": "./packages/toprf-secure-backup" }
+    { "path": "./packages/greetings" },
+    { "path": "./packages/letter-crafter" },
+    { "path": "./packages/signatures" }
   ],
   "files": [],
   "include": ["./scripts", "./types"]
