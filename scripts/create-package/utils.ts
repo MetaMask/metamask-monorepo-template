@@ -133,10 +133,11 @@ async function writeJsonFile(
   filePath: string,
   fileContent: string,
 ): Promise<void> {
-  await fs.writeFile(
-    filePath,
-    prettierFormat(fileContent, { ...prettierRc, parser: 'json' }),
-  );
+  const formattedFileContent = await prettierFormat(fileContent, {
+    ...prettierRc,
+    parser: 'json',
+  });
+  await fs.writeFile(filePath, formattedFileContent);
 }
 
 /**
