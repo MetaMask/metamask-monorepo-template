@@ -1,11 +1,11 @@
-name: Require changelog updates for pull requests
+name: Check Changelog
 
 on:
-  workflow_call:
+  pull_request:
+    types: [opened, synchronize, labeled, unlabeled]
 
 jobs:
-  require-changelog-updates-for-pull-requests:
-    if: github.event_name == 'pull_request'
+  check_changelog:
     uses: MetaMask/github-tools/.github/workflows/changelog-check.yml@91e349d177db2c569e03c7aa69d2acb404b62f75
     with:
       base-branch: ${{ github.event.pull_request.base.ref }}
@@ -15,10 +15,3 @@ jobs:
       repo: ${{ github.repository }}
     secrets:
       gh-token: ${{ secrets.GITHUB_TOKEN }}
-
-  dont-require-changelog-updates-for-pushes:
-    runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request'
-    steps:
-      - run: |
-          echo "Skipping changelog check"
