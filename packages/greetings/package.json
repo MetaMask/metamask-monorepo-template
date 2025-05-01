@@ -6,6 +6,7 @@
     "MetaMask",
     "Ethereum"
   ],
+  "sideEffects": false,
   "homepage": "https://github.com/MetaMask/metamask-monorepo-template/tree/main/packages/greetings#readme",
   "bugs": {
     "url": "https://github.com/MetaMask/metamask-monorepo-template/issues"
