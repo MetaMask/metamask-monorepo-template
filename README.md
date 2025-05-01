@@ -19,7 +19,9 @@ This repository contains the following packages [^fn1]:
 
 <!-- start package list -->
 
-- [`@metamask/metamask-module-template`](packages/metamask-module-template)
+- [`@metamask/greetings`](packages/greetings)
+- [`@metamask/letter-crafter`](packages/letter-crafter)
+- [`@metamask/signatures`](packages/signatures)
 
 <!-- end package list -->
 
@@ -31,7 +33,12 @@ Or, in graph form [^fn1]:
 %%{ init: { 'flowchart': { 'curve': 'bumpX' } } }%%
 graph LR;
 linkStyle default opacity:0.5
-  metamask_module_template(["@metamask/metamask-module-template"]);
+  greetings(["@metamask/greetings"]);
+  letter_crafter(["@metamask/letter-crafter"]);
+  signatures(["@metamask/signatures"]);
+  letter_crafter --> greetings;
+  letter_crafter --> signatures;
+  signatures --> greetings;
 ```
 
 <!-- end dependency graph -->
