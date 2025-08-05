@@ -1,12 +1,12 @@
 {
-  "name": "PACKAGE_NAME",
+  "name": "@metamask/greetings",
   "version": "0.0.0",
-  "description": "PACKAGE_DESCRIPTION",
+  "description": "Example package containing greeting-based utilities",
   "keywords": [
     "MetaMask",
     "Ethereum"
   ],
-  "homepage": "https://github.com/MetaMask/metamask-monorepo-template/tree/main/packages/PACKAGE_DIRECTORY_NAME#readme",
+  "homepage": "https://github.com/MetaMask/metamask-monorepo-template/tree/main/packages/greetings#readme",
   "bugs": {
     "url": "https://github.com/MetaMask/metamask-monorepo-template/issues"
   },
@@ -18,39 +18,46 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.cts",
   "files": [
     "dist/"
   ],
   "scripts": {
     "build": "ts-bridge --project tsconfig.build.json --verbose --clean --no-references",
     "build:docs": "typedoc",
-    "changelog:validate": "../../scripts/validate-changelog.sh PACKAGE_NAME",
+    "changelog:update": "../../scripts/update-changelog.sh @metamask/greetings",
+    "changelog:validate": "../../scripts/validate-changelog.sh @metamask/greetings",
+    "prepare-manifest:preview": "../../scripts/prepare-preview-manifest.sh",
     "publish:preview": "yarn npm publish --tag preview",
-    "test": "jest --reporters=jest-silent-reporter",
-    "test:clean": "jest --clearCache",
-    "test:verbose": "jest --verbose",
-    "test:watch": "jest --watch"
+    "since-latest-release": "../../scripts/since-latest-release.sh",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --reporters=jest-silent-reporter",
+    "test:clean": "NODE_OPTIONS=--experimental-vm-modules jest --clearCache",
+    "test:verbose": "NODE_OPTIONS=--experimental-vm-modules jest --verbose",
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },
   "devDependencies": {
-    "@metamask/auto-changelog": "^3.4.4",
+    "@metamask/auto-changelog": "^3.1.0",
     "@types/jest": "^27.4.1",
     "deepmerge": "^4.2.2",
-    "jest": "^27.5.1",
     "ts-jest": "^27.1.4",
-    "typedoc": "^0.24.8",
-    "typedoc-plugin-missing-exports": "^2.0.0",
+    "typedoc": "^0.23.22",
+    "typedoc-plugin-missing-exports": "^1.0.0",
     "typescript": "~5.2.2"
   },
   "engines": {
-    "node": "NODE_VERSIONS"
+    "node": "^18.18 || >=20"
   },
   "publishConfig": {
     "access": "public",
