@@ -42,8 +42,9 @@ describe('create-package/utils', () => {
     });
 
     it('should read the expected monorepo files', async () => {
-      jest.mocked(fs.promises.readFile).mockImplementation(
-        async (filePath: string) => {
+      jest
+        .mocked(fs.promises.readFile)
+        .mockImplementation(async (filePath: string) => {
           switch (path.basename(filePath)) {
             case MonorepoFiles.TsConfig:
               return tsConfig;
@@ -54,8 +55,7 @@ describe('create-package/utils', () => {
             default:
               throw new Error(`Unexpected file: ${path.basename(filePath)}`);
           }
-        },
-      );
+        });
 
       const monorepoFileData = await readMonorepoFiles();
 
