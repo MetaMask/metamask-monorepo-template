@@ -42,7 +42,7 @@ describe('create-package/utils', () => {
     });
 
     it('should read the expected monorepo files', async () => {
-      (fs.promises.readFile as jest.Mock).mockImplementation(
+      jest.mocked(fs.promises.readFile).mockImplementation(
         async (filePath: string) => {
           switch (path.basename(filePath)) {
             case MonorepoFiles.TsConfig:
@@ -87,14 +87,14 @@ describe('create-package/utils', () => {
         nodeVersions: '>=18.0.0',
       };
 
-      (fs.promises.stat as jest.Mock).mockImplementation(() => {
+      jest.mocked(fs.promises.stat).mockImplementation(() => {
         const error = new Error('already exists');
         // @ts-expect-error This property is not part of the Error type
         error.code = 'ENOENT';
         throw error;
       });
 
-      (fsUtils.readAllFiles as jest.Mock).mockResolvedValueOnce({
+      jest.mocked(fsUtils.readAllFiles).mockResolvedValueOnce({
         'src/index.ts': 'export default 42;',
         'src/index.test.ts': 'export default 42;',
         'mock1.file':
@@ -174,7 +174,7 @@ describe('create-package/utils', () => {
       };
 
       // We are mocking this method.
-      (fs.existsSync as jest.Mock).mockReturnValueOnce(true);
+      jest.mocked(fs.existsSync).mockReturnValueOnce(true);
 
       await expect(
         finalizeAndWriteData(packageData, monorepoFileData),

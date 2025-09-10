@@ -2,7 +2,11 @@ name: Check Changelog
 
 on:
   pull_request:
-    types: [opened, synchronize, labeled, unlabeled]
+    types:
+      - opened
+      - synchronize
+      - labeled
+      - unlabeled
 
 jobs:
   check_changelog:
