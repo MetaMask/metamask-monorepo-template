@@ -115,9 +115,6 @@ module.exports = defineConfig({
           'ts-bridge --project tsconfig.build.json --verbose --clean --no-references',
         );
 
-        // All non-root packages must have the same "build:docs" script.
-        expectWorkspaceField(workspace, 'scripts.build:docs', 'typedoc');
-
         if (isPrivate) {
           // All private, non-root packages must not have a "publish:preview"
           // script.
