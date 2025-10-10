@@ -1,12 +1,12 @@
 {
-  "name": "@metamask/greetings",
+  "name": "PACKAGE_NAME",
   "version": "0.0.0",
-  "description": "Example package containing greeting-based utilities",
+  "description": "PACKAGE_DESCRIPTION",
   "keywords": [
     "MetaMask",
     "Ethereum"
   ],
-  "homepage": "https://github.com/MetaMask/metamask-monorepo-template/tree/main/packages/greetings#readme",
+  "homepage": "https://github.com/MetaMask/metamask-monorepo-template/tree/main/packages/PACKAGE_DIRECTORY_NAME#readme",
   "bugs": {
     "url": "https://github.com/MetaMask/metamask-monorepo-template/issues"
   },
@@ -37,8 +37,8 @@
   "scripts": {
     "build": "ts-bridge --project tsconfig.build.json --verbose --clean --no-references",
     "build:docs": "typedoc",
-    "changelog:update": "../../scripts/update-changelog.sh @metamask/greetings",
-    "changelog:validate": "../../scripts/validate-changelog.sh @metamask/greetings",
+    "changelog:update": "../../scripts/update-changelog.sh PACKAGE_NAME",
+    "changelog:validate": "../../scripts/validate-changelog.sh PACKAGE_NAME",
     "prepare-manifest:preview": "../../scripts/prepare-preview-manifest.sh",
     "publish:preview": "yarn npm publish --tag preview",
     "since-latest-release": "../../scripts/since-latest-release.sh",
@@ -57,7 +57,7 @@
     "typescript": "~5.2.2"
   },
   "engines": {
-    "node": "^18.18 || >=20"
+    "node": "NODE_VERSIONS"
   },
   "publishConfig": {
     "access": "public",

@@ -16,7 +16,8 @@ This is a template for creating new monorepos under the MetaMask GitHub organiza
 7. Open `docs/contributing.md` and replace `metamask-monorepo-template` with the name of your repo.
 8. Update the title and description at the top of this README to match your repo.
 9. Update `.github/CODEOWNERS` to match your team.
-10. Delete this "Template Instructions" section.
+10. Open `scripts/create-package/package-template/README.md` and replace `THIS_REPO` with the name of your repo.
+11. Delete this "Template Instructions" section.
 
 Make sure to check out the docs for [how to create a new package](./docs/contributing.md#adding-new-packages-to-the-monorepo).
 

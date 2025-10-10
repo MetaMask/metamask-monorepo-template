@@ -1,18 +1,14 @@
-# `@metamask/greetings`
+# `PACKAGE_NAME`
 
-(This is an example package. You should replace this description with your own.)
+PACKAGE_DESCRIPTION
 
 ## Installation
 
-`yarn add @metamask/greetings`
+`yarn add PACKAGE_NAME`
 
 or
 
-`npm install @metamask/greetings`
-
-## Usage
-
-(You should explain what your package does.)
+`npm install PACKAGE_NAME`
 
 ## Contributing
 
