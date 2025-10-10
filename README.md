@@ -2,7 +2,9 @@
 
 This is a template for creating new monorepos under the MetaMask GitHub organization. (Replace this description with your own.)
 
-> [!note Template Instructions]
+> [!note]
+>
+> ## Template Instructions
 >
 > To use this template, follow these steps:
 >
