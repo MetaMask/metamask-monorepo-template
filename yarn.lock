@@ -1355,6 +1355,7 @@ __metadata:
   resolution: "@metamask/greetings@workspace:packages/greetings"
   dependencies:
     "@metamask/auto-changelog": "npm:^3.1.0"
+    "@ts-bridge/cli": "npm:^0.5.1"
     "@types/jest": "npm:^27.4.1"
     deepmerge: "npm:^4.2.2"
     jest: "npm:^27.5.1"
@@ -1373,6 +1374,7 @@ __metadata:
     "@metamask/auto-changelog": "npm:^3.1.0"
     "@metamask/greetings": "npm:^0.0.0"
     "@metamask/signatures": "npm:^0.0.0"
+    "@ts-bridge/cli": "npm:^0.5.1"
     "@types/jest": "npm:^27.4.1"
     deepmerge: "npm:^4.2.2"
     jest: "npm:^27.5.1"
@@ -1442,6 +1444,7 @@ __metadata:
   dependencies:
     "@metamask/auto-changelog": "npm:^3.1.0"
     "@metamask/greetings": "npm:^0.0.0"
+    "@ts-bridge/cli": "npm:^0.5.1"
     "@types/jest": "npm:^27.4.1"
     deepmerge: "npm:^4.2.2"
     jest: "npm:^27.5.1"
