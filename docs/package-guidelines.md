@@ -9,8 +9,8 @@ It is tempting to save time by re-exporting all symbols from one or many files b
 🚫
 
 ```typescript
-export * from './foo-controller';
-export * from './foo-service';
+export * from './foo';
+export * from './bar';
 ```
 
 However, using this syntax is not advised for the following reasons:
@@ -24,9 +24,9 @@ Instead of using barrel exports, name every export explicitly:
 ✅
 
 ```typescript
-export { FooController } from './foo-controller';
-export type { FooControllerMessenger } from './foo-controller';
-export { FooService } from './foo-service';
-export { FooService } from './foo-service';
-export type { AbstractFooService } from './foo-service';
+export { A } from './foo';
+export type { B } from './foo';
+export { C } from './bar';
+export { C } from './bar';
+export type { D } from './bar';
 ```
