@@ -22,6 +22,9 @@ describe('create-package/commands', () => {
         tsConfigBuild: {
           references: [{ path: '../packages/foo' }],
         },
+        tsConfigLint: {
+          references: [{ path: '../packages/foo' }],
+        },
         nodeVersions: '>=18.0.0',
       });
 
@@ -49,6 +52,9 @@ describe('create-package/commands', () => {
             references: [{ path: '../packages/foo' }],
           },
           tsConfigBuild: {
+            references: [{ path: '../packages/foo' }],
+          },
+          tsConfigLint: {
             references: [{ path: '../packages/foo' }],
           },
           nodeVersions: '>=18.0.0',

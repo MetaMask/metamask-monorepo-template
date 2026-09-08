@@ -87,6 +87,9 @@ describe('create-package/cli', () => {
         tsConfigBuild: {
           references: [],
         },
+        tsConfigLint: {
+          references: [],
+        },
         nodeVersions: '>=18.0.0',
       });
       jest.spyOn(utils, 'finalizeAndWriteData').mockResolvedValue();
@@ -113,6 +116,9 @@ describe('create-package/cli', () => {
           references: [],
         },
         tsConfigBuild: {
+          references: [],
+        },
+        tsConfigLint: {
           references: [],
         },
         nodeVersions: '>=18.0.0',

@@ -1,0 +1,22 @@
+{
+  /**
+   * This configuration enables repository-wide type checking, including files (such as tests) that
+   * are excluded from the build.
+   */
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "tsBuildInfoFile": "./.tsc-lint-cache/lint.tsbuildinfo"
+  },
+  "references": [
+    {
+      "path": "./packages/greetings/tsconfig.lint.json"
+    },
+    {
+      "path": "./packages/letter-crafter/tsconfig.lint.json"
+    },
+    {
+      "path": "./packages/signatures/tsconfig.lint.json"
+    }
+  ]
+}
