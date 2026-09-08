@@ -14,8 +14,6 @@ const config: KnipConfig = {
         // Passed to Jest as `--reporters=jest-silent-reporter` from package
         // scripts rather than imported.
         'jest-silent-reporter',
-        // Run as the `create-release-branch` executable, not imported.
-        '@metamask/create-release-branch',
       ],
     },
     'packages/*': {

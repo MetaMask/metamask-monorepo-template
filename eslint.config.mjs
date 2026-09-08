@@ -28,6 +28,10 @@ const config = createConfig([
   },
   {
     rules: {
+      // Handled by Oxfmt.
+      'prettier/prettier': 'off',
+      'import-x/order': 'off',
+
       // TODO: Re-enable this rule
       // Enabling it with error suppression breaks `--fix`, because the autofixer for this rule
       // does not work very well.
