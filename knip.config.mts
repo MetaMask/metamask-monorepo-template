@@ -3,8 +3,12 @@ import type { KnipConfig } from 'knip';
 const config: KnipConfig = {
   workspaces: {
     '.': {
-      entry: ['scripts/**/*.{ts,js,sh}', '*.config.{js,cjs,mjs,ts}'],
-      project: ['scripts/**/*.ts', '*.{js,cjs,mjs,ts}'],
+      entry: [
+        'scripts/**/*.{ts,js,sh}',
+        'tests/**/*.ts',
+        '*.config.{js,cjs,mjs,ts}',
+      ],
+      project: ['scripts/**/*.ts', 'tests/**/*.ts', '*.{js,cjs,mjs,ts}'],
       ignore: ['scripts/create-package/package-template/**'],
       ignoreDependencies: [
         // Installed for the `plugin-allow-scripts` Yarn plugin and the
@@ -14,6 +18,10 @@ const config: KnipConfig = {
         // Passed to Jest as `--reporters=jest-silent-reporter` from package
         // scripts rather than imported.
         'jest-silent-reporter',
+        // `bats` (used to run the shell script tests) ships a non-standard
+        // `bin` field, so it has no `.bin` shim and is invoked by path. knip
+        // can't tie that invocation back to the dependency.
+        'bats',
       ],
     },
     'packages/*': {

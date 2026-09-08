@@ -11,7 +11,7 @@ This is a template for creating new monorepos under the MetaMask GitHub organiza
 > 1. Click on the "Use this template" button in the top-left corner of the repo, then select "Create a new repository". Follow the instructions to make a new repo.
 > 2. Once the new repo is created, run `yarn install`.
 > 3. Remove all subdirectories in `packages/`.
-> 4. Re-run `yarn update-readme-content`.
+> 4. Re-run `yarn readme-content:update`.
 > 5. Open `tsconfig.json` and reset `references` to an empty array.
 > 6. Open `tsconfig.build.json` and reset `references` to an empty array.
 > 7. Open `docs/contributing.md` and replace `metamask-monorepo-template` with the name of your repo.
@@ -56,4 +56,4 @@ linkStyle default opacity:0.5
 
 <!-- end dependency graph -->
 
-(This section may be regenerated at any time by running `yarn update-readme-content`.)
+(This section may be regenerated at any time by running `yarn readme-content:update`.)

@@ -102,6 +102,7 @@ jobs:
         with:
           is-high-risk-environment: false
       - run: yarn test:scripts
+      - run: yarn test:scripts:shell
       - run: yarn workspace ${{ matrix.package-name }} run test
       - name: Require clean working directory
         shell: bash
