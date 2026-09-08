@@ -1,4 +1,4 @@
-import { craftThankYouLetter } from '.';
+import { craftThankYouLetter } from './index.js';
 
 describe('letter-crafter', () => {
   describe('craftThankYouLetter', () => {
