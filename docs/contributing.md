@@ -141,27 +141,9 @@ Now you can [use these preview builds in your project](#using-preview-builds).
 
 If you make more changes to a package, follow step 2 again, making sure to update the reference to the package in your project's `package.json` to use the newly published preview version.
 
-#### Publishing preview builds as an independent contributor
+#### Publishing preview builds from a fork
 
-If you've forked this repository, you can create preview builds based on a branch by following these steps:
-
-1. First, since an NPM scope is used to host preview build releases, you'll need access to one. If you do not, you can either [create a new organization](https://www.npmjs.com/org/create) or [convert your existing username into an organization](https://www.npmjs.com/org/upgrade).
-
-2. Once you've done this, open the `package.json` for each package that you want to publish and change the scope in the name from `@metamask` to `@<NPM_ORG>`, replacing `NPM_ORG` with your NPM organization.
-
-3. Next, run the following command to create and publish the preview builds (again, replacing `NPM_ORG` as appropriate):
-
-   ```
-   yarn prepare-preview-builds "@<NPM_ORG>" "$(git rev-parse --short HEAD)" && yarn build && yarn publish-previews
-   ```
-
-   You should be able to see the published version of each package in the output. Note two things:
-   - The name is scoped to the NPM organization you entered instead of `@metamask`.
-   - The ID of the last commit in the branch is appended to the version, e.g. `1.2.3-preview-e2df9b4` instead of `1.2.3`.
-
-Now you can [use these preview builds in your project](#using-preview-builds).
-
-If you make more changes to a package, follow step 3 again, making sure to update the reference to the package in your project's `package.json` to use the newly published preview version.
+The `publish-preview` action does not run for pull requests from a fork, because the publishing token cannot be trusted to forks. Ask a member of the MetaMask organization to publish preview builds for you.
 
 #### Using preview builds
 
