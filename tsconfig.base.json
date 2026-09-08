@@ -1,8 +1,13 @@
 {
+  /**
+   * This configuration is extended by all other TypeScript configurations.
+   */
   "compilerOptions": {
+    "composite": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "lib": ["ES2023"],
     "module": "Node16",
     "moduleResolution": "Node16",

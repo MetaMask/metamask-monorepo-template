@@ -28,7 +28,7 @@ module.exports = {
   coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ['./src/index.ts'],
+  coveragePathIgnorePatterns: ['.*/index\\.ts'],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'babel',
@@ -100,10 +100,6 @@ module.exports = {
   // A preset that is used as a base for Jest's configuration
   preset: 'ts-jest',
 
-  // The path to the Prettier executable used to format snapshots
-  // Jest doesn't support Prettier 3 yet, so we use Prettier 2
-  prettierPath: require.resolve('prettier-2'),
-
   // Run tests from one or more projects
   // projects: undefined
 
@@ -137,10 +133,10 @@ module.exports = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: ['./tests/setup.ts'],
+  // setupFiles: ['../../tests/setup.ts'],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: ['./tests/setupAfterEnv.ts'],
+  // setupFilesAfterEnv: ['../../tests/setupAfterEnv/index.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -180,13 +176,10 @@ module.exports = {
   // testRunner: "jest-circus/runner",
 
   // Default timeout of a test in milliseconds.
-  testTimeout: 30000,
+  // testTimeout: 5000,
 
   // This option sets the URL for the jsdom environment. It is reflected in properties such as location.href
   // testURL: "http://localhost",
-
-  // Setting this value to "fake" allows the use of fake timers for functions such as "setTimeout"
-  // timers: "real",
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,

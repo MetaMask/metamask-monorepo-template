@@ -1,5 +1,11 @@
 {
-  "extends": "./tsconfig.base.json",
+  /**
+   * This configuration is used by the `build` script in `package.json`.
+   *
+   * This is just used as a way to request builds for all packages. `tsconfig.base.json` is not
+   * extended here because the `tsconfig.build.json` file referenced for each package already
+   * (indirectly) extends it.
+   */
   "references": [
     { "path": "./packages/greetings/tsconfig.build.json" },
     { "path": "./packages/letter-crafter/tsconfig.build.json" },
