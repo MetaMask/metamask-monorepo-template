@@ -9,6 +9,19 @@ inputs:
 runs:
   using: composite
   steps:
+    # A composite action does not fail on an empty required input, and an empty
+    # prefix matches no commit. Without this check, the release check passes and
+    # every release goes undetected.
+    - name: Check that the release commit prefix is set
+      shell: bash
+      env:
+        COMMIT_STARTS_WITH: ${{ inputs.commit-starts-with }}
+      run: |
+        if [[ -z "$COMMIT_STARTS_WITH" ]]; then
+          echo "::error::The RELEASE_COMMIT_PREFIX repository variable must be set."
+          exit 1
+        fi
+
     - name: Checkout and setup environment
       uses: MetaMask/action-checkout-and-setup@v3
       with:
