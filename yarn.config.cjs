@@ -147,32 +147,26 @@ module.exports = defineConfig({
           '../../scripts/since-latest-release.sh',
         );
 
-        // All non-root packages must have the same "test" script.
-        expectWorkspaceField(
-          workspace,
-          'scripts.test',
-          'NODE_OPTIONS=--experimental-vm-modules jest --reporters=jest-silent-reporter',
-        );
-
-        // All non-root packages must have the same "test:clean" script.
-        expectWorkspaceField(
-          workspace,
-          'scripts.test:clean',
-          'NODE_OPTIONS=--experimental-vm-modules jest --clearCache',
-        );
+        // All non-root packages must have the same "test" script. They share
+        // one Vitest config, which sets `watch: false` so this runs once and
+        // exits.
+        expectWorkspaceField(workspace, 'scripts.test', 'vitest');
 
         // All non-root packages must have the same "test:verbose" script.
         expectWorkspaceField(
           workspace,
           'scripts.test:verbose',
-          'NODE_OPTIONS=--experimental-vm-modules jest --verbose',
+          'vitest --reporter=verbose',
         );
 
         // All non-root packages must have the same "test:watch" script.
+        expectWorkspaceField(workspace, 'scripts.test:watch', 'vitest --watch');
+
+        // All non-root packages must have the same "test:clean" script.
         expectWorkspaceField(
           workspace,
-          'scripts.test:watch',
-          'NODE_OPTIONS=--experimental-vm-modules jest --watch',
+          'scripts.test:clean',
+          'vitest --clearCache',
         );
       }
 
@@ -225,8 +219,8 @@ module.exports = defineConfig({
         expectYarnPackageManager(workspace);
       }
 
-      // All packages must specify a minimum Node.js version of 18.18.
-      expectWorkspaceField(workspace, 'engines.node', '^18.18 || >=20');
+      // All packages must specify a minimum Node.js version of 22.
+      expectWorkspaceField(workspace, 'engines.node', '^22.14.0 || ^24');
 
       // All non-root public packages should be published to the NPM registry;
       // all non-root private packages should not.

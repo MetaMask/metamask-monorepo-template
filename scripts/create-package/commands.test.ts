@@ -1,21 +1,23 @@
+import type { Mock } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { Arguments } from 'yargs';
 
 import type { CreatePackageOptions } from './commands.js';
 import { createPackageHandler } from './commands.js';
 import * as utils from './utils.js';
 
-jest.mock('./utils', () => ({
-  finalizeAndWriteData: jest.fn(),
-  readMonorepoFiles: jest.fn(),
+vi.mock('./utils.js', () => ({
+  finalizeAndWriteData: vi.fn(),
+  readMonorepoFiles: vi.fn(),
 }));
 
 // January 2 to avoid time zone issues.
-jest.useFakeTimers().setSystemTime(new Date('2023-01-02'));
+vi.useFakeTimers().setSystemTime(new Date('2023-01-02'));
 
 describe('create-package/commands', () => {
   describe('createPackageHandler', () => {
     it('should create the expected package', async () => {
-      (utils.readMonorepoFiles as jest.Mock).mockResolvedValue({
+      (utils.readMonorepoFiles as Mock).mockResolvedValue({
         tsConfig: {
           references: [{ path: '../packages/foo' }],
         },

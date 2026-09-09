@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { generateSignature } from './index.js';
 
 describe('signatureHelpers', () => {

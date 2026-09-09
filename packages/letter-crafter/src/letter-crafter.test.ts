@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest';
+
 import { craftThankYouLetter } from './index.js';
 
 describe('letter-crafter', () => {

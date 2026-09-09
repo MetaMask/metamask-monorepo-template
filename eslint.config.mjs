@@ -1,13 +1,10 @@
 import base, { createConfig } from '@metamask/eslint-config';
-import jest from '@metamask/eslint-config-jest';
 import nodejs from '@metamask/eslint-config-nodejs';
 import typescript from '@metamask/eslint-config-typescript';
+import vitest from '@metamask/eslint-config-vitest';
 import node from 'eslint-plugin-n';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 
 const NODE_LTS_VERSION = 22;
-const configDirName = dirname(fileURLToPath(import.meta.url));
 
 const config = createConfig([
   ...base,
@@ -50,6 +47,8 @@ const config = createConfig([
       '**/*.{js,cjs,mjs}',
       '**/*.test.{js,ts}',
       '**/tests/**/*.{js,ts}',
+      // Configuration files at the root, such as the Vitest and knip configs.
+      '*.mts',
       'scripts/**/*.{ts,mts}',
     ],
     ignores: ['scripts/create-package/package-template/**/*.ts'],
@@ -67,7 +66,7 @@ const config = createConfig([
     extends: [typescript],
     languageOptions: {
       parserOptions: {
-        tsconfigRootDir: configDirName,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     settings: {
@@ -97,30 +96,29 @@ const config = createConfig([
   },
   {
     files: ['**/*.test.{js,ts}', '**/tests/**/*.{js,ts}'],
-    extends: [jest],
+    extends: [vitest],
     rules: {
       // We sometimes find conditionals to be useful, especially when mocking
       // functions.
       // Consider disabling this rule in `@metamask/eslint-config`.
-      'jest/no-conditional-in-test': 'off',
+      'vitest/no-conditional-in-test': 'off',
 
       // TODO: Upgrade these from warning to error in shared config
-      'jest/expect-expect': 'error',
-      'jest/no-alias-methods': 'error',
-      'jest/no-commented-out-tests': 'error',
-      'jest/no-disabled-tests': 'error',
+      'vitest/expect-expect': 'error',
+      'vitest/no-alias-methods': 'error',
+      'vitest/no-commented-out-tests': 'error',
+      'vitest/no-disabled-tests': 'error',
     },
   },
   {
-    // These files are test helpers, not tests. We still use the Jest ESLint
+    // These files are test helpers, not tests. We still use the Vitest ESLint
     // config here to ensure that ESLint expects a test-like environment, but
     // various rules meant just to apply to tests have been disabled.
     files: ['**/tests/**/*.{js,ts}'],
     ignores: ['**/*.test.{js,ts}'],
     rules: {
-      'jest/no-export': 'off',
-      'jest/require-top-level-describe': 'off',
-      'jest/no-if': 'off',
+      'vitest/no-export': 'off',
+      'vitest/require-top-level-describe': 'off',
     },
   },
   // This should really be in `@metamask/eslint-config-typescript`
@@ -139,16 +137,16 @@ const config = createConfig([
     },
   },
   {
-    files: ['**/jest.environment.js'],
-    rules: {
-      // These files run under Node, and thus `require(...)` is expected.
-      'n/global-require': 'off',
-    },
-  },
-  {
     files: ['**/*.mjs'],
     languageOptions: {
       sourceType: 'module',
+    },
+    settings: {
+      // The default resolver does not follow the `exports` map of a package,
+      // which subpaths such as `vitest/config` rely on.
+      'import-x/resolver': {
+        typescript: true,
+      },
     },
   },
   // Prevent cross-package relative imports

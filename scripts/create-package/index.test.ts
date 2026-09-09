@@ -1,13 +1,17 @@
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { MockedFunction } from 'vitest';
+
 import cli from './cli.js';
 import { commands } from './commands.js';
 
-jest.mock('./cli');
+vi.mock('./cli.js');
 
 describe('create-package/index', () => {
   let originalProcess: typeof globalThis.process;
   beforeEach(() => {
     originalProcess = globalThis.process;
-    // TODO: Replace with `jest.replaceProperty` after Jest v29 update.
+    // A copy, so the test can assert on `process.exitCode` without
+    // changing the real process.
     globalThis.process = { ...globalThis.process };
   });
 
@@ -16,14 +20,12 @@ describe('create-package/index', () => {
   });
 
   it('executes the CLI application', async () => {
-    const mock = cli as jest.MockedFunction<typeof cli>;
+    const mock = cli as MockedFunction<typeof cli>;
     mock.mockRejectedValue('foo');
 
-    jest.spyOn(console, 'error').mockImplementation();
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
-    /* eslint-disable */
-    require('.');
-    /* eslint-enable */
+    await import('./index.js');
     await new Promise((resolve) => setImmediate(resolve));
 
     expect(cli).toHaveBeenCalledTimes(1);
