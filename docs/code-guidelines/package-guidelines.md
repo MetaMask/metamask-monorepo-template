@@ -1,4 +1,4 @@
-# Guidelines for Packages
+# Guidelines for packages
 
 ## List exports explicitly
 
@@ -26,7 +26,6 @@ Instead of using barrel exports, name every export explicitly:
 ```typescript
 export { A } from './foo';
 export type { B } from './foo';
-export { C } from './bar';
 export { C } from './bar';
 export type { D } from './bar';
 ```
