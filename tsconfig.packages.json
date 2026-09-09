@@ -14,7 +14,7 @@
      * sync by hand.
      */
     "paths": {
-      "@metamask/*": ["../*/src"]
+      "@metamask/*": ["../*/src/index.ts"]
     }
   }
 }
