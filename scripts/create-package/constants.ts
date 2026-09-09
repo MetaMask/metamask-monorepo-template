@@ -5,6 +5,7 @@ export enum MonorepoFiles {
   PackageJson = 'package.json',
   TsConfig = 'tsconfig.json',
   TsConfigBuild = 'tsconfig.build.json',
+  TsConfigLint = 'tsconfig.lint.json',
 }
 
 /**

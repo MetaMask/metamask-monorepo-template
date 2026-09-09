@@ -31,4 +31,5 @@ scripts/coverage
 !.yarn/versions
 
 # typescript
+**/.tsc-lint-cache/
 packages/*/*.tsbuildinfo

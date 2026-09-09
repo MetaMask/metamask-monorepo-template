@@ -13,6 +13,7 @@ const PACKAGE_TEMPLATE_DIR = path.join(__dirname, 'package-template');
 const REPO_ROOT = path.join(__dirname, '..', '..');
 const REPO_TS_CONFIG = path.join(REPO_ROOT, MonorepoFiles.TsConfig);
 const REPO_TS_CONFIG_BUILD = path.join(REPO_ROOT, MonorepoFiles.TsConfigBuild);
+const REPO_TS_CONFIG_LINT = path.join(REPO_ROOT, MonorepoFiles.TsConfigLint);
 const REPO_PACKAGE_JSON = path.join(REPO_ROOT, MonorepoFiles.PackageJson);
 const PACKAGES_PATH = path.join(REPO_ROOT, 'packages');
 
@@ -44,6 +45,7 @@ export type PackageData = Readonly<{
 type MonorepoFileData = {
   tsConfig: Tsconfig;
   tsConfigBuild: Tsconfig;
+  tsConfigLint: Tsconfig;
   nodeVersions: string;
 };
 
@@ -69,15 +71,18 @@ type PackageJson = {
  * @returns A map of file paths to file contents.
  */
 export async function readMonorepoFiles(): Promise<MonorepoFileData> {
-  const [tsConfig, tsConfigBuild, packageJson] = await Promise.all([
-    fs.readFile(REPO_TS_CONFIG, 'utf-8'),
-    fs.readFile(REPO_TS_CONFIG_BUILD, 'utf-8'),
-    fs.readFile(REPO_PACKAGE_JSON, 'utf-8'),
-  ]);
+  const [tsConfig, tsConfigBuild, tsConfigLint, packageJson] =
+    await Promise.all([
+      fs.readFile(REPO_TS_CONFIG, 'utf-8'),
+      fs.readFile(REPO_TS_CONFIG_BUILD, 'utf-8'),
+      fs.readFile(REPO_TS_CONFIG_LINT, 'utf-8'),
+      fs.readFile(REPO_PACKAGE_JSON, 'utf-8'),
+    ]);
 
   return {
     tsConfig: commentJson.parse(tsConfig) as unknown as Tsconfig,
     tsConfigBuild: commentJson.parse(tsConfigBuild) as unknown as Tsconfig,
+    tsConfigLint: commentJson.parse(tsConfigLint) as unknown as Tsconfig,
     nodeVersions: (JSON.parse(packageJson) as PackageJson).engines.node,
   };
 }
@@ -118,6 +123,10 @@ export async function finalizeAndWriteData(
     REPO_TS_CONFIG_BUILD,
     commentJson.stringify(monorepoFileData.tsConfigBuild, null, 2),
   );
+  await writeJsonFile(
+    REPO_TS_CONFIG_LINT,
+    commentJson.stringify(monorepoFileData.tsConfigLint, null, 2),
+  );
 
   // Postprocess
   // Add the new package to the lockfile.
@@ -156,19 +165,19 @@ function updateTsConfigs(
   packageData: PackageData,
   monorepoFileData: MonorepoFileData,
 ): void {
-  const { tsConfig, tsConfigBuild } = monorepoFileData;
+  const { tsConfig, tsConfigBuild, tsConfigLint } = monorepoFileData;
+  const packageDirectory = `./${path.basename(PACKAGES_PATH)}/${
+    packageData.directoryName
+  }`;
 
-  tsConfig.references.push({
-    path: `./${path.basename(PACKAGES_PATH)}/${packageData.directoryName}`,
-  });
-  tsConfig.references.sort((a, b) => a.path.localeCompare(b.path));
-
-  tsConfigBuild.references.push({
-    path: `./${path.basename(PACKAGES_PATH)}/${
-      packageData.directoryName
-    }/tsconfig.build.json`,
-  });
-  tsConfigBuild.references.sort((a, b) => a.path.localeCompare(b.path));
+  for (const [config, referencePath] of [
+    [tsConfig, packageDirectory],
+    [tsConfigBuild, `${packageDirectory}/${MonorepoFiles.TsConfigBuild}`],
+    [tsConfigLint, `${packageDirectory}/${MonorepoFiles.TsConfigLint}`],
+  ] as const) {
+    config.references.push({ path: referencePath });
+    config.references.sort((a, b) => a.path.localeCompare(b.path));
+  }
 }
 
 /**

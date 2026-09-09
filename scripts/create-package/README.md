@@ -14,7 +14,7 @@ To create a new package, follow these steps:
    - If your desired license is _not_ MIT, then you must update your `LICENSE` file and the `license` field of `package.json`.
 3. Add your dependencies.
    - Do this as normal using `yarn`.
-   - If your new package depends on other packages in the monorepo, make sure to add them to the `references` array in your new package's `tsconfig.json` and `tsconfig.build.json`.
+   - If your new package depends on other packages in the monorepo, make sure to add them to the `references` array in your new package's `tsconfig.json`, `tsconfig.build.json`, and `tsconfig.lint.json`.
 
 And that's it!
 

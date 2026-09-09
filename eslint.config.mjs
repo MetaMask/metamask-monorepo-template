@@ -12,6 +12,7 @@ const config = createConfig([
   ...base,
   {
     ignores: [
+      '**/.tsc-lint-cache',
       '**/coverage/**',
       '**/dist/**',
       '**/docs/**',

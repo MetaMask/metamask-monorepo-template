@@ -37,31 +37,39 @@ describe('create-package/utils', () => {
     const tsConfigBuild = JSON.stringify({
       references: [{ path: '../packages/foo' }],
     });
+    const tsConfigLint = JSON.stringify({
+      references: [{ path: '../packages/foo' }],
+    });
     const packageJson = JSON.stringify({
       engines: { node: '>=18.0.0' },
     });
 
     it('should read the expected monorepo files', async () => {
-      jest
-        .mocked(fs.promises.readFile)
-        .mockImplementation(async (filePath: string) => {
-          switch (path.basename(filePath)) {
-            case MonorepoFiles.TsConfig:
-              return tsConfig;
-            case MonorepoFiles.TsConfigBuild:
-              return tsConfigBuild;
-            case MonorepoFiles.PackageJson:
-              return packageJson;
-            default:
-              throw new Error(`Unexpected file: ${path.basename(filePath)}`);
-          }
-        });
+      jest.mocked(fs.promises.readFile).mockImplementation(async (filePath) => {
+        // `readFile` also accepts file handles, but this mock is only ever
+        // called with paths.
+        const fileName = path.basename(filePath as string);
+
+        switch (fileName) {
+          case MonorepoFiles.TsConfig:
+            return tsConfig;
+          case MonorepoFiles.TsConfigBuild:
+            return tsConfigBuild;
+          case MonorepoFiles.TsConfigLint:
+            return tsConfigLint;
+          case MonorepoFiles.PackageJson:
+            return packageJson;
+          default:
+            throw new Error(`Unexpected file: ${fileName}`);
+        }
+      });
 
       const monorepoFileData = await readMonorepoFiles();
 
       expect(monorepoFileData).toStrictEqual({
         tsConfig: commentJson.parse(tsConfig),
         tsConfigBuild: commentJson.parse(tsConfigBuild),
+        tsConfigLint: commentJson.parse(tsConfigLint),
         nodeVersions: '>=18.0.0',
       });
     });
@@ -82,6 +90,9 @@ describe('create-package/utils', () => {
           references: [{ path: './packages/bar' }],
         },
         tsConfigBuild: {
+          references: [{ path: './packages/bar' }],
+        },
+        tsConfigLint: {
           references: [{ path: './packages/bar' }],
         },
         nodeVersions: '>=18.0.0',
@@ -126,8 +137,8 @@ describe('create-package/utils', () => {
       );
 
       // Writing monorepo files
-      expect(fs.promises.writeFile).toHaveBeenCalledTimes(2);
-      expect(prettier.format).toHaveBeenCalledTimes(2);
+      expect(fs.promises.writeFile).toHaveBeenCalledTimes(3);
+      expect(prettier.format).toHaveBeenCalledTimes(3);
       expect(fs.promises.writeFile).toHaveBeenCalledWith(
         expect.stringMatching(/tsconfig\.json$/u),
         JSON.stringify(
@@ -148,6 +159,19 @@ describe('create-package/utils', () => {
             references: [
               { path: './packages/bar' },
               { path: './packages/foo/tsconfig.build.json' },
+            ],
+          },
+          null,
+          2,
+        ),
+      );
+      expect(fs.promises.writeFile).toHaveBeenCalledWith(
+        expect.stringMatching(/tsconfig\.lint\.json$/u),
+        JSON.stringify(
+          {
+            references: [
+              { path: './packages/bar' },
+              { path: './packages/foo/tsconfig.lint.json' },
             ],
           },
           null,
@@ -179,6 +203,9 @@ describe('create-package/utils', () => {
           references: [{ path: './packages/bar' }],
         },
         tsConfigBuild: {
+          references: [{ path: './packages/bar' }],
+        },
+        tsConfigLint: {
           references: [{ path: './packages/bar' }],
         },
         nodeVersions: '20.0.0',

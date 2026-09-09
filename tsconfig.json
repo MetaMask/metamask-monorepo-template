@@ -1,6 +1,7 @@
 {
   /**
-   * This configuration is used by editors such as VSCode for TypeScript-related features.
+   * This configuration is used by editors such as VSCode for TypeScript-related features, and is
+   * extended by `tsconfig.lint.json`.
    */
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
