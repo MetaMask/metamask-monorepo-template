@@ -115,8 +115,7 @@ module.exports = defineConfig({
         // All non-root packages must not have side effects.
         expectWorkspaceField(workspace, 'sideEffects', false);
 
-        // All non-root packages must set up ESM- and CommonJS-compatible
-        // exports correctly.
+        // All non-root packages must set up ESM-compatible exports correctly.
         expectCorrectWorkspaceExports(workspace);
 
         // All non-root packages must have the same "build" script.
@@ -508,8 +507,8 @@ async function expectWorkspaceLicense(workspace) {
  * @param {Workspace} workspace - The workspace to check.
  */
 function expectCorrectWorkspaceExports(workspace) {
-  // All non-root packages must provide the location of the JavaScript
-  // entrypoint and its matching type declaration file.
+  // All non-root packages must provide the location of the ESM-compatible
+  // JavaScript entrypoint and its matching type declaration file.
   expectWorkspaceField(workspace, 'exports["."].types', './dist/index.d.ts');
   expectWorkspaceField(workspace, 'exports["."].default', './dist/index.js');
 
@@ -527,6 +526,38 @@ function expectCorrectWorkspaceExports(workspace) {
     'exports["./package.json"]',
     './package.json',
   );
+
+  const nonRootExports = Object.keys(workspace.manifest.exports).filter(
+    (key) => key !== '.' && key !== './package.json',
+  );
+
+  // Any additional export must point at a JavaScript file and a matching type
+  // declaration file.
+  for (const key of nonRootExports) {
+    const prefix = `exports["${key}"]`;
+    expectWorkspaceField(workspace, `${prefix}.types`);
+    expectWorkspaceField(workspace, `${prefix}.default`);
+
+    const typesValue = get(workspace.manifest, `${prefix}.types`);
+    if (
+      typesValue &&
+      (typeof typesValue !== 'string' || !typesValue.endsWith('.d.ts'))
+    ) {
+      workspace.error(
+        `Expected package's "${prefix}.types" field to end with ".d.ts", but it was "${typesValue}".`,
+      );
+    }
+
+    const defaultValue = get(workspace.manifest, `${prefix}.default`);
+    if (
+      defaultValue &&
+      (typeof defaultValue !== 'string' || !defaultValue.endsWith('.js'))
+    ) {
+      workspace.error(
+        `Expected package's "${prefix}.default" field to end with ".js", but it was "${defaultValue}".`,
+      );
+    }
+  }
 }
 
 /**
