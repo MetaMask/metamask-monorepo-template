@@ -12,9 +12,11 @@
      * Vitest applies these same paths through the `resolve.tsconfigPaths`
      * option in `vitest.config.packages.mjs`, so there is nothing to keep in
      * sync by hand.
+     *
+     * `${configDir}` is the directory of the package itself.
      */
     "paths": {
-      "@metamask/*": ["../*/src/index.ts"]
+      "@metamask/*": ["${configDir}/../*/src/index.ts"]
     }
   }
 }

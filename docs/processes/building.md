@@ -1,6 +1,6 @@
 # Building packages
 
-Packages are built with [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html) and TypeScript project references. The output is ES modules only.
+Packages are built using TypeScript 7 ([`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html)) and [project references](https://www.typescriptlang.org/docs/handbook/project-references.html). The output is ES modules only.
 
 Built files show up in the `dist/` directory in each package. These are the files which will ultimately be published to NPM.
 

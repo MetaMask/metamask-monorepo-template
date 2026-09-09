@@ -47,10 +47,11 @@
   },
   "devDependencies": {
     "@metamask/auto-changelog": "^6.1.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitest/coverage-istanbul": "^4.1.11",
     "rimraf": "^5.0.5",
     "typedoc": "^0.25.13",
-    "typescript": "~5.3.3",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "vitest": "^4.1.11"
   },
   "engines": {
