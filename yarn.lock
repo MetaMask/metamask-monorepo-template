@@ -867,7 +867,7 @@ __metadata:
     "@metamask/utils": "npm:^11.12.0"
     "@ts-bridge/cli": "npm:^0.6.4"
     "@types/lodash": "npm:^4.14.191"
-    "@types/node": "npm:^16.18.54"
+    "@types/node": "npm:^22.13.14"
     "@types/semver": "npm:^7"
     "@types/yargs": "npm:^17.0.33"
     "@typescript-eslint/eslint-plugin": "npm:^8.48.0"
@@ -1884,10 +1884,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.18.54":
-  version: 16.18.106
-  resolution: "@types/node@npm:16.18.106"
-  checksum: 10/1970719a048bfc56554f8e132e8e5292c197d6e023d334190b0d3817a05a12bfb6537eaa24778ddb695d2073195f0545e5a4b6bcaf81b656994bbca39f349c3b
+"@types/node@npm:^22.13.14":
+  version: 22.20.1
+  resolution: "@types/node@npm:22.20.1"
+  dependencies:
+    undici-types: "npm:~6.21.0"
+  checksum: 10/0949e49d0383569ebd1222a2f65a9adb9328a6a6dbed459a02cdb37c61147755386c004c4ffbe436de59f5859df1774b1dd6bf168f7aeee46884bb190e0c384f
   languageName: node
   linkType: hard
 
@@ -6182,6 +6184,13 @@ __metadata:
   version: 4.0.11
   resolution: "unbash@npm:4.0.11"
   checksum: 10/f44bd9febbef85976623ade7c264bdf6c5b0f420f277d4ecf27a8290de49baade349254f4ef3cbbcf47c3ee3e01d64788d963b277b16ccc18aab50626fcd8a33
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.21.0":
+  version: 6.21.0
+  resolution: "undici-types@npm:6.21.0"
+  checksum: 10/ec8f41aa4359d50f9b59fa61fe3efce3477cc681908c8f84354d8567bb3701fafdddf36ef6bff307024d3feb42c837cf6f670314ba37fc8145e219560e473d14
   languageName: node
   linkType: hard
 

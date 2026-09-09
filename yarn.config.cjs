@@ -216,9 +216,8 @@ module.exports = defineConfig({
         expectYarnPackageManager(workspace);
       }
 
-      // All packages must specify a minimum Node.js version of 20. Vitest
-      // does not support Node 18, which reached end of life in April 2025.
-      expectWorkspaceField(workspace, 'engines.node', '^20 || >=22');
+      // All packages must specify a minimum Node.js version of 22.
+      expectWorkspaceField(workspace, 'engines.node', '^22.14.0 || ^24');
 
       // All non-root public packages should be published to the NPM registry;
       // all non-root private packages should not.
