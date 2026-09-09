@@ -7,10 +7,10 @@
     "type": "git",
     "url": "https://github.com/MetaMask/metamask-monorepo-template.git"
   },
-  "files": [],
   "workspaces": [
     "packages/*"
   ],
+  "files": [],
   "scripts": {
     "build": "yarn ts-bridge --project tsconfig.build.json --verbose",
     "build:clean": "yarn build:only-clean && yarn build",
@@ -19,12 +19,14 @@
     "changelog:update": "yarn workspaces foreach --all --no-private --parallel --interlaced --verbose run changelog:update",
     "changelog:validate": "yarn workspaces foreach --all --no-private --parallel --interlaced --verbose run changelog:validate",
     "create-package": "tsx scripts/create-package",
+    "create-release-branch": "create-release-branch --formatter oxfmt",
     "lint": "yarn lint:eslint && echo && yarn lint:misc --check && yarn constraints && yarn lint:dependencies",
     "lint:dependencies": "knip --config knip.config.mts --dependencies && yarn dedupe --check",
     "lint:dependencies:fix": "knip --config knip.config.mts --dependencies && yarn dedupe",
     "lint:eslint": "yarn build:only-clean && eslint . --cache",
     "lint:fix": "yarn lint:eslint --fix && echo && yarn lint:misc --write && yarn constraints --fix && yarn lint:dependencies:fix",
-    "lint:misc": "prettier --no-error-on-unmatched-pattern '**/*.json' '**/*.md' '**/*.yml' '!.yarnrc.yml' '!merged-packages/**' --ignore-path .gitignore",
+    "lint:misc": "oxfmt --ignore-path .gitignore",
+    "lint:misc:check": "yarn lint:misc --check",
     "prepare-preview-builds": "./scripts/prepare-preview-builds.sh",
     "publish-previews": "yarn workspaces foreach --all --no-private --parallel --verbose run publish:preview",
     "test": "yarn test:scripts --silent --collectCoverage=false --reporters=jest-silent-reporter && yarn test:packages",
@@ -34,9 +36,6 @@
     "test:verbose": "yarn workspaces foreach --all --parallel --verbose run test:verbose",
     "update-readme-content": "tsx scripts/update-readme-content.ts",
     "workspaces:list-versions": "./scripts/list-workspace-versions.sh"
-  },
-  "simple-git-hooks": {
-    "pre-push": "yarn lint"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^3.0.4",
@@ -70,8 +69,8 @@
     "jest-silent-reporter": "^0.6.0",
     "knip": "^6.23.0",
     "lodash": "^4.17.21",
+    "oxfmt": "^0.45.0",
     "prettier": "^3.3.3",
-    "prettier-plugin-packagejson": "^2.4.5",
     "rimraf": "^5.0.5",
     "semver": "^7.6.3",
     "simple-git-hooks": "^2.8.0",
@@ -81,10 +80,13 @@
     "typescript-eslint": "^8.48.0",
     "yargs": "^17.7.2"
   },
-  "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1",
+  "simple-git-hooks": {
+    "pre-push": "yarn lint"
+  },
   "engines": {
     "node": "^18.18 || >=20"
   },
+  "packageManager": "yarn@4.16.0+sha256.ba05224324578801b9cc98170d64aa50b9a36733b440fb0942306da3fbbdc7d1",
   "lavamoat": {
     "allowScripts": {
       "$root$": true,

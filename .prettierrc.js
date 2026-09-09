@@ -1,4 +1,8 @@
 /**
+ * Formatting of files in this repo is handled by Oxfmt (see `.oxfmtrc.json`).
+ * Prettier remains configured here because `create-package` uses it to format
+ * the JSON files it generates.
+ *
  * @type {import('prettier').Options}
  */
 module.exports = {
@@ -8,5 +12,4 @@ module.exports = {
   singleQuote: true,
   tabWidth: 2,
   trailingComma: 'all',
-  plugins: ['prettier-plugin-packagejson'],
 };
