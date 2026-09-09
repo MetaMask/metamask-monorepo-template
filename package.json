@@ -30,8 +30,6 @@
     "lint:misc:check": "yarn lint:misc --check",
     "lint:tsc": "tsc --build tsconfig.lint.json",
     "prepack": "./scripts/prepack.sh",
-    "prepare-preview-builds": "./scripts/prepare-preview-builds.sh",
-    "publish-previews": "yarn workspaces foreach --all --no-private --parallel --verbose run publish:preview",
     "readme-content:check": "tsx scripts/update-readme-content.ts --check",
     "readme-content:update": "tsx scripts/update-readme-content.ts",
     "setup": "yarn install && yarn simple-git-hooks",
