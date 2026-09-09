@@ -1,6 +1,6 @@
 # Building packages
 
-[`ts-bridge`](https://github.com/ts-bridge/ts-bridge) is used to build packages in both CommonJS- and ESM-compatible formats.
+Packages are built with [`tsc`](https://www.typescriptlang.org/docs/handbook/compiler-options.html) and TypeScript project references. The output is ES modules only.
 
 Built files show up in the `dist/` directory in each package. These are the files which will ultimately be published to NPM.
 

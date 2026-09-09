@@ -64,6 +64,9 @@ module.exports = defineConfig({
         Yarn.dependencies({ workspace }),
       );
 
+      // All workspaces must specify "type: module".
+      expectWorkspaceField(workspace, 'type', 'module');
+
       // All packages must have a name.
       expectWorkspaceField(workspace, 'name');
 
@@ -120,14 +123,27 @@ module.exports = defineConfig({
         expectWorkspaceField(
           workspace,
           'scripts.build',
-          'ts-bridge --project tsconfig.build.json --verbose --clean --no-references',
+          'tsc --project tsconfig.build.json',
         );
 
         // All non-root packages must have the same "build:all" script.
         expectWorkspaceField(
           workspace,
           'scripts.build:all',
-          'ts-bridge --project tsconfig.build.json --verbose --clean',
+          'tsc --build tsconfig.build.json --verbose',
+        );
+
+        // All non-root packages must have the same "build:clean" and
+        // "build:only-clean" scripts.
+        expectWorkspaceField(
+          workspace,
+          'scripts.build:clean',
+          'yarn build:only-clean && yarn build',
+        );
+        expectWorkspaceField(
+          workspace,
+          'scripts.build:only-clean',
+          `rimraf './dist' './tsconfig.build.tsbuildinfo'`,
         );
 
         // All non-root packages must have the same "build:docs" script.
@@ -492,37 +508,18 @@ async function expectWorkspaceLicense(workspace) {
  * @param {Workspace} workspace - The workspace to check.
  */
 function expectCorrectWorkspaceExports(workspace) {
-  // All non-root packages must provide the location of the ESM-compatible
-  // JavaScript entrypoint and its matching type declaration file.
-  expectWorkspaceField(
-    workspace,
-    'exports["."].import.types',
-    './dist/index.d.mts',
-  );
-  expectWorkspaceField(
-    workspace,
-    'exports["."].import.default',
-    './dist/index.mjs',
-  );
-
-  // All non-root package must provide the location of the CommonJS-compatible
+  // All non-root packages must provide the location of the JavaScript
   // entrypoint and its matching type declaration file.
-  expectWorkspaceField(
-    workspace,
-    'exports["."].require.types',
-    './dist/index.d.cts',
-  );
-  expectWorkspaceField(
-    workspace,
-    'exports["."].require.default',
-    './dist/index.cjs',
-  );
-  expectWorkspaceField(workspace, 'main', './dist/index.cjs');
-  expectWorkspaceField(workspace, 'types', './dist/index.d.cts');
+  expectWorkspaceField(workspace, 'exports["."].types', './dist/index.d.ts');
+  expectWorkspaceField(workspace, 'exports["."].default', './dist/index.js');
 
-  // Types should not be set in the export object directly, but rather in the
-  // `import` and `require` subfields.
-  expectWorkspaceField(workspace, 'exports["."].types', null);
+  // Packages should not provide separate CommonJS and ESM exports.
+  expectWorkspaceField(workspace, 'exports["."].require', null);
+  expectWorkspaceField(workspace, 'exports["."].import', null);
+
+  // Packages should not provide a "main" or "types" field.
+  expectWorkspaceField(workspace, 'main', null);
+  expectWorkspaceField(workspace, 'types', null);
 
   // All non-root packages must export a `package.json` file.
   expectWorkspaceField(
