@@ -1,8 +1,19 @@
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
+
 import cli from './cli.js';
 import { commands, commandMap } from './commands.js';
 import * as utils from './utils.js';
 
-jest.mock('./utils');
+// `yargs` captures `process.exit` by reference when its ESM entry point is
+// imported, so a spy installed later is never seen. Vitest hoists this above
+// the imports, which lets us put our own function in place first.
+const { exit } = vi.hoisted(() => {
+  const exitMock = vi.fn();
+  process.exit = exitMock as never;
+  return { exit: exitMock };
+});
+
+vi.mock('./utils.js');
 
 /**
  * Returns a mock `process.argv` array with the provided arguments. Includes
@@ -44,27 +55,27 @@ function getParsedArgv(
 describe('create-package/cli', () => {
   beforeEach(() => {
     // yargs calls process.exit() with 1 on failure and sometimes 0 on success.
-    // We have to intercept it.
-    jest.spyOn(process, 'exit').mockImplementation((code?: number) => {
+    // We have to intercept it. `mockReset` clears the implementation between
+    // tests, so it is set again here.
+    exit.mockImplementation(((code?: number) => {
       if (code === 1) {
         throw new Error('exit: 1');
-      } else {
-        return undefined as never;
       }
-    });
+      return undefined as never;
+    }) as never);
 
     // We actually check these.
-    jest.spyOn(console, 'error');
-    jest.spyOn(console, 'log');
+    vi.spyOn(console, 'error');
+    vi.spyOn(console, 'log');
   });
 
   afterEach(() => {
-    delete process.exitCode;
+    process.exitCode = undefined;
   });
 
   it('should error if a string option contains only whitespace', async () => {
     const defaultCommand = commandMap.$0;
-    jest.spyOn(defaultCommand, 'handler').mockImplementation();
+    vi.spyOn(defaultCommand, 'handler').mockResolvedValue(undefined);
 
     await expect(cli(getMockArgv('--name', '  '), commands)).rejects.toThrow(
       'exit: 1',
@@ -78,9 +89,9 @@ describe('create-package/cli', () => {
   describe('command: $0', () => {
     it('should call the command handler with the correct arguments', async () => {
       const defaultCommand = commandMap.$0;
-      jest.spyOn(defaultCommand, 'handler');
+      vi.spyOn(defaultCommand, 'handler');
 
-      jest.spyOn(utils, 'readMonorepoFiles').mockResolvedValue({
+      vi.spyOn(utils, 'readMonorepoFiles').mockResolvedValue({
         tsConfig: {
           references: [],
         },
@@ -92,7 +103,7 @@ describe('create-package/cli', () => {
         },
         nodeVersions: '>=18.0.0',
       });
-      jest.spyOn(utils, 'finalizeAndWriteData').mockResolvedValue();
+      vi.spyOn(utils, 'finalizeAndWriteData').mockResolvedValue();
 
       expect(
         await cli(
@@ -109,9 +120,9 @@ describe('create-package/cli', () => {
 
     it('should handle names already prefixed with "@metamask/"', async () => {
       const defaultCommand = commandMap.$0;
-      jest.spyOn(defaultCommand, 'handler');
+      vi.spyOn(defaultCommand, 'handler');
 
-      jest.spyOn(utils, 'readMonorepoFiles').mockResolvedValue({
+      vi.spyOn(utils, 'readMonorepoFiles').mockResolvedValue({
         tsConfig: {
           references: [],
         },
@@ -123,7 +134,7 @@ describe('create-package/cli', () => {
         },
         nodeVersions: '>=18.0.0',
       });
-      jest.spyOn(utils, 'finalizeAndWriteData').mockResolvedValue();
+      vi.spyOn(utils, 'finalizeAndWriteData').mockResolvedValue();
 
       expect(
         await cli(
@@ -140,7 +151,7 @@ describe('create-package/cli', () => {
 
     it('should create a new package', async () => {
       const defaultCommand = commandMap.$0;
-      jest.spyOn(defaultCommand, 'handler').mockImplementation();
+      vi.spyOn(defaultCommand, 'handler').mockResolvedValue(undefined);
 
       expect(
         await cli(
@@ -157,7 +168,7 @@ describe('create-package/cli', () => {
 
     it('should error if the package name is missing', async () => {
       const defaultCommand = commandMap.$0;
-      jest.spyOn(defaultCommand, 'handler').mockImplementation();
+      vi.spyOn(defaultCommand, 'handler').mockResolvedValue(undefined);
 
       await expect(
         cli(getMockArgv('--description', 'bar'), commands),
@@ -170,7 +181,7 @@ describe('create-package/cli', () => {
 
     it('should error if the package description is missing', async () => {
       const defaultCommand = commandMap.$0;
-      jest.spyOn(defaultCommand, 'handler').mockImplementation();
+      vi.spyOn(defaultCommand, 'handler').mockResolvedValue(undefined);
 
       await expect(cli(getMockArgv('--name', 'foo'), commands)).rejects.toThrow(
         'exit: 1',

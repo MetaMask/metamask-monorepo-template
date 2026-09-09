@@ -45,10 +45,9 @@
     "changelog:update": "../../scripts/update-changelog.sh @metamask/letter-crafter",
     "changelog:validate": "../../scripts/validate-changelog.sh @metamask/letter-crafter",
     "since-latest-release": "../../scripts/since-latest-release.sh",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --reporters=jest-silent-reporter",
-    "test:clean": "NODE_OPTIONS=--experimental-vm-modules jest --clearCache",
-    "test:verbose": "NODE_OPTIONS=--experimental-vm-modules jest --verbose",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
+    "test": "vitest",
+    "test:verbose": "vitest --reporter=verbose",
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
     "@metamask/greetings": "^0.0.0",
@@ -57,12 +56,10 @@
   "devDependencies": {
     "@metamask/auto-changelog": "^6.1.0",
     "@ts-bridge/cli": "^0.6.4",
-    "@types/jest": "^30.0.0",
-    "deepmerge": "^4.2.2",
-    "jest": "^30.4.2",
-    "ts-jest": "^29.4.11",
+    "@vitest/coverage-istanbul": "^4.1.11",
     "typedoc": "^0.25.13",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "vitest": "^4.1.11"
   },
   "engines": {
     "node": "^18.18 || >=20"

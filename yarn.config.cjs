@@ -147,33 +147,24 @@ module.exports = defineConfig({
           '../../scripts/since-latest-release.sh',
         );
 
-        // All non-root packages must have the same "test" script.
-        expectWorkspaceField(
-          workspace,
-          'scripts.test',
-          'NODE_OPTIONS=--experimental-vm-modules jest --reporters=jest-silent-reporter',
-        );
-
-        // All non-root packages must have the same "test:clean" script.
-        expectWorkspaceField(
-          workspace,
-          'scripts.test:clean',
-          'NODE_OPTIONS=--experimental-vm-modules jest --clearCache',
-        );
+        // All non-root packages must have the same "test" script. They share
+        // one Vitest config, which sets `watch: false` so this runs once and
+        // exits.
+        expectWorkspaceField(workspace, 'scripts.test', 'vitest');
 
         // All non-root packages must have the same "test:verbose" script.
         expectWorkspaceField(
           workspace,
           'scripts.test:verbose',
-          'NODE_OPTIONS=--experimental-vm-modules jest --verbose',
+          'vitest --reporter=verbose',
         );
 
         // All non-root packages must have the same "test:watch" script.
-        expectWorkspaceField(
-          workspace,
-          'scripts.test:watch',
-          'NODE_OPTIONS=--experimental-vm-modules jest --watch',
-        );
+        expectWorkspaceField(workspace, 'scripts.test:watch', 'vitest --watch');
+
+        // Vitest has no persistent cache to clear, so there is no
+        // "test:clean" script.
+        workspace.unset('scripts.test:clean');
       }
 
       if (isChildWorkspace) {

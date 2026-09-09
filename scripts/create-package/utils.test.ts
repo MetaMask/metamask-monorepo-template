@@ -3,30 +3,37 @@ import execa from 'execa';
 import fs from 'fs';
 import path from 'path';
 import * as prettier from 'prettier';
+import type { Mock } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { MonorepoFiles } from './constants.js';
 import * as fsUtils from './fs-utils.js';
 import type { PackageData } from './utils.js';
 import { finalizeAndWriteData, readMonorepoFiles } from './utils.js';
 
-jest.mock('fs', () => ({
-  promises: {
-    mkdir: jest.fn(),
-    readFile: jest.fn(),
-    writeFile: jest.fn(),
-    stat: jest.fn(),
-  },
+// `utils.ts` imports `promises` as a named export, while this file uses the
+// default export. Both must point at the same object, so assertions here see
+// the calls made there.
+vi.mock('fs', () => {
+  const promises = {
+    mkdir: vi.fn(),
+    readFile: vi.fn(),
+    writeFile: vi.fn(),
+    stat: vi.fn(),
+  };
+
+  return { default: { promises }, promises };
+});
+
+vi.mock('execa', () => ({ default: vi.fn() }));
+
+vi.mock('prettier', () => ({
+  format: vi.fn(),
 }));
 
-jest.mock('execa', () => jest.fn());
-
-jest.mock('prettier', () => ({
-  format: jest.fn(),
-}));
-
-jest.mock('./fs-utils', () => ({
-  readAllFiles: jest.fn(),
-  writeFiles: jest.fn(),
+vi.mock('./fs-utils.js', () => ({
+  readAllFiles: vi.fn(),
+  writeFiles: vi.fn(),
 }));
 
 describe('create-package/utils', () => {
@@ -45,7 +52,7 @@ describe('create-package/utils', () => {
     });
 
     it('should read the expected monorepo files', async () => {
-      jest.mocked(fs.promises.readFile).mockImplementation(async (filePath) => {
+      vi.mocked(fs.promises.readFile).mockImplementation(async (filePath) => {
         // `readFile` also accepts file handles, but this mock is only ever
         // called with paths.
         const fileName = path.basename(filePath as string);
@@ -98,14 +105,14 @@ describe('create-package/utils', () => {
         nodeVersions: '>=18.0.0',
       };
 
-      jest.mocked(fs.promises.stat).mockImplementation(() => {
+      vi.mocked(fs.promises.stat).mockImplementation(() => {
         const error = new Error('already exists');
         // @ts-expect-error This property is not part of the Error type
         error.code = 'ENOENT';
         throw error;
       });
 
-      jest.mocked(fsUtils.readAllFiles).mockResolvedValueOnce({
+      vi.mocked(fsUtils.readAllFiles).mockResolvedValueOnce({
         'src/index.ts': 'export default 42;',
         'src/index.test.ts': 'export default 42;',
         'mock1.file':
@@ -114,7 +121,7 @@ describe('create-package/utils', () => {
         'mock3.file': 'PACKAGE_DESCRIPTION PACKAGE_DIRECTORY_NAME',
       });
 
-      (prettier.format as jest.Mock).mockImplementation((input) => input);
+      (prettier.format as Mock).mockImplementation((input) => input);
 
       await finalizeAndWriteData(packageData, monorepoFileData);
 
@@ -212,7 +219,7 @@ describe('create-package/utils', () => {
       };
 
       // The package directory resolving means it already exists.
-      jest.mocked(fs.promises.stat).mockResolvedValueOnce({} as fs.Stats);
+      vi.mocked(fs.promises.stat).mockResolvedValueOnce({} as fs.Stats);
 
       await expect(
         finalizeAndWriteData(packageData, monorepoFileData),

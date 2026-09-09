@@ -9,8 +9,9 @@
      * Here we ensure that TypeScript resolves `@metamask/*` imports to the
      * uncompiled source code for packages that live in this repo.
      *
-     * NOTE: This must be synchronized with the `moduleNameMapper` option in
-     * `jest.config.packages.js`.
+     * Vitest applies these same paths through the `resolve.tsconfigPaths`
+     * option in `vitest.config.packages.mjs`, so there is nothing to keep in
+     * sync by hand.
      */
     "paths": {
       "@metamask/*": ["../*/src"]

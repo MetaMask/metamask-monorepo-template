@@ -15,9 +15,6 @@ const config: KnipConfig = {
         // `preinstall` lifecycle guard, neither of which knip can see.
         '@lavamoat/allow-scripts',
         '@lavamoat/preinstall-always-fail',
-        // Passed to Jest as `--reporters=jest-silent-reporter` from package
-        // scripts rather than imported.
-        'jest-silent-reporter',
         // `bats` (used to run the shell script tests) ships a non-standard
         // `bin` field, so it has no `.bin` shim and is invoked by path. knip
         // can't tie that invocation back to the dependency.
