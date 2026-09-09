@@ -24,6 +24,11 @@ export default defineConfig({
     // The files to include in the test run.
     include: ['src/**/*.test.ts'],
 
+    // Reset mocks between tests, so a mocked implementation cannot leak from
+    // one test into the next.
+    mockReset: true,
+    restoreMocks: true,
+
     coverage: {
       enabled: true,
 

@@ -34,6 +34,7 @@
     "readme-content:update": "tsx scripts/update-readme-content.ts",
     "setup": "yarn install && yarn simple-git-hooks",
     "test": "yarn test:scripts --silent --coverage.enabled=false && yarn test:scripts:shell && yarn test:packages",
+    "test:clean": "yarn workspaces foreach --all --no-private --parallel --verbose run test:clean && yarn test",
     "test:packages": "yarn test:verbose --silent --coverage.enabled=false",
     "test:scripts": "vitest --config ./vitest.config.scripts.mjs",
     "test:scripts:shell": "node_modules/bats/bin/bats scripts/*.bats",

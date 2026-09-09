@@ -3,11 +3,8 @@ import nodejs from '@metamask/eslint-config-nodejs';
 import typescript from '@metamask/eslint-config-typescript';
 import vitest from '@metamask/eslint-config-vitest';
 import node from 'eslint-plugin-n';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 
 const NODE_LTS_VERSION = 22;
-const configDirName = dirname(fileURLToPath(import.meta.url));
 
 const config = createConfig([
   ...base,
@@ -69,7 +66,7 @@ const config = createConfig([
     extends: [typescript],
     languageOptions: {
       parserOptions: {
-        tsconfigRootDir: configDirName,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
     settings: {

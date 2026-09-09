@@ -1,16 +1,12 @@
-import { basename, dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { basename } from 'path';
 import { mergeConfig } from 'vitest/config';
 
 import baseConfig from '../../vitest.config.packages.mjs';
 
-// `import.meta.dirname` needs Node >= 21.2, but this repo supports Node 18.
-const packageDirectory = dirname(fileURLToPath(import.meta.url));
-
 export default mergeConfig(baseConfig, {
   test: {
     // The display name when running multiple projects.
-    name: basename(packageDirectory),
+    name: basename(import.meta.dirname),
 
     coverage: {
       // The test run fails when coverage drops below these.

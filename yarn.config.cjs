@@ -162,9 +162,12 @@ module.exports = defineConfig({
         // All non-root packages must have the same "test:watch" script.
         expectWorkspaceField(workspace, 'scripts.test:watch', 'vitest --watch');
 
-        // Vitest has no persistent cache to clear, so there is no
-        // "test:clean" script.
-        workspace.unset('scripts.test:clean');
+        // All non-root packages must have the same "test:clean" script.
+        expectWorkspaceField(
+          workspace,
+          'scripts.test:clean',
+          'vitest --clearCache',
+        );
       }
 
       if (isChildWorkspace) {

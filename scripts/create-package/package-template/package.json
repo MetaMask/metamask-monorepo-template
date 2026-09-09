@@ -46,6 +46,7 @@
     "changelog:validate": "../../scripts/validate-changelog.sh PACKAGE_NAME",
     "since-latest-release": "../../scripts/since-latest-release.sh",
     "test": "vitest",
+    "test:clean": "vitest --clearCache",
     "test:verbose": "vitest --reporter=verbose",
     "test:watch": "vitest --watch"
   },
