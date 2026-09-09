@@ -40,6 +40,8 @@
   },
   "scripts": {
     "build": "ts-bridge --project tsconfig.build.json --verbose --clean --no-references",
+    "build:all": "ts-bridge --project tsconfig.build.json --verbose --clean",
+    "build:docs": "typedoc",
     "changelog:update": "../../scripts/update-changelog.sh @metamask/letter-crafter",
     "changelog:validate": "../../scripts/validate-changelog.sh @metamask/letter-crafter",
     "prepare-manifest:preview": "../../scripts/prepare-preview-manifest.sh",
@@ -61,6 +63,7 @@
     "deepmerge": "^4.2.2",
     "jest": "^30.4.2",
     "ts-jest": "^29.4.11",
+    "typedoc": "^0.25.13",
     "typescript": "~5.3.3"
   },
   "engines": {

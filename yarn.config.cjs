@@ -28,6 +28,12 @@ const ALLOWED_INCONSISTENT_DEPENDENCIES = {
 };
 
 /**
+ * These packages are allowed as peer dependencies without requiring
+ * installation as devDependencies. Add entries as your project needs them.
+ */
+const ALLOWED_PEER_DEPENDENCIES = [];
+
+/**
  * Aliases for the Yarn type definitions, to make the code more readable.
  *
  * @typedef {import('@yarnpkg/types').Yarn.Constraints.Yarn} Yarn
@@ -117,19 +123,15 @@ module.exports = defineConfig({
           'ts-bridge --project tsconfig.build.json --verbose --clean --no-references',
         );
 
-        if (isPrivate) {
-          // All private, non-root packages must not have a "publish:preview"
-          // script.
-          workspace.unset('scripts.publish:preview');
-        } else {
-          // All non-private, non-root packages must have the same
-          // "publish:preview" script.
-          expectWorkspaceField(
-            workspace,
-            'scripts.publish:preview',
-            'yarn npm publish --tag preview',
-          );
-        }
+        // All non-root packages must have the same "build:all" script.
+        expectWorkspaceField(
+          workspace,
+          'scripts.build:all',
+          'ts-bridge --project tsconfig.build.json --verbose --clean',
+        );
+
+        // All non-root packages must have the same "build:docs" script.
+        expectWorkspaceField(workspace, 'scripts.build:docs', 'typedoc');
 
         // No non-root packages may have a "prepack" script.
         workspace.unset('scripts.prepack');
@@ -241,7 +243,7 @@ module.exports = defineConfig({
 
       if (isChildWorkspace) {
         // All non-root packages must have a valid README.md file.
-        await expectReadme(workspace, workspaceBasename);
+        await expectReadme(workspace, workspaceBasename, isPrivate);
       }
     }
 
@@ -608,7 +610,7 @@ function expectUpToDateWorkspaceDependenciesAndDevDependencies(
     const prodDependency = dependencyInstancesByType.get('dependencies');
     const peerDependency = dependencyInstancesByType.get('peerDependencies');
 
-    if (devDependency || (prodDependency && !peerDependency)) {
+    if ((devDependency || prodDependency) && !peerDependency) {
       const dependency = devDependency ?? prodDependency;
 
       const ignoredRanges = ALLOWED_INCONSISTENT_DEPENDENCIES[dependencyIdent];
@@ -646,7 +648,17 @@ function expectUpToDateWorkspacePeerDependencies(Yarn, workspace) {
           dependency.range,
         )
       ) {
-        dependency.update(`^${dependencyWorkspaceVersion.major}.0.0`);
+        // Ensure peer dependency includes latest breaking changes.
+        //
+        // Technically pre-1.0 versions can make breaking changes in patch releases, but
+        // conventionally we always bump the most significant digit for breaking changes.
+        if (dependencyWorkspaceVersion.major > 0) {
+          dependency.update(`^${dependencyWorkspaceVersion.major}.0.0`);
+        } else if (dependencyWorkspaceVersion.minor > 0) {
+          dependency.update(`^0.${dependencyWorkspaceVersion.minor}.0`);
+        } else {
+          dependency.update(`^0.0.${dependencyWorkspaceVersion.patch}`);
+        }
       }
     }
   }
@@ -693,10 +705,8 @@ function expectDependenciesNotInBothProdAndDevOrPeer(
 }
 
 /**
- * Expect that if the workspace package lists another package in its
- * `peerDependencies`, the package is also listed in the workspace's
- * `devDependencies`. If the other package is a workspace package, also expect
- * that the dev dependency matches the current version of the package.
+ * Expect that if a non-workspace package lists another package in its
+ * `peerDependencies`, the package is also listed in `devDependencies`.
  *
  * @param {Yarn} Yarn - The Yarn "global".
  * @param {Workspace} workspace - The workspace to check.
@@ -716,15 +726,13 @@ function expectPeerDependenciesAlsoListedAsDevDependencies(
       continue;
     }
 
+    if (ALLOWED_PEER_DEPENDENCIES.includes(dependencyIdent)) {
+      continue;
+    }
+
     const dependencyWorkspace = Yarn.workspace({ ident: dependencyIdent });
 
-    if (dependencyWorkspace) {
-      expectWorkspaceField(
-        workspace,
-        `devDependencies["${dependencyIdent}"]`,
-        `^${dependencyWorkspace.manifest.version}`,
-      );
-    } else {
+    if (!dependencyWorkspace) {
       expectWorkspaceField(workspace, `devDependencies["${dependencyIdent}"]`);
     }
   }
@@ -825,13 +833,15 @@ function expectYarnPackageManager(workspace) {
  *
  * - Not contain template instructions (unless the workspace is the module
  * template itself).
+ * - Contain installation instructions (if it is not private).
  * - Match the version of Node.js specified in the `.nvmrc` file.
  *
  * @param {Workspace} workspace - The workspace to check.
  * @param {string} workspaceBasename - The name of the workspace.
+ * @param {boolean} isPrivate - Whether the package is private.
  * @returns {Promise<void>}
  */
-async function expectReadme(workspace, workspaceBasename) {
+async function expectReadme(workspace, workspaceBasename, isPrivate) {
   const readme = await getWorkspaceFile(workspace, 'README.md');
 
   if (
@@ -843,13 +853,19 @@ async function expectReadme(workspace, workspaceBasename) {
     );
   }
 
-  if (!readme.includes(`yarn add @metamask/${workspaceBasename}`)) {
+  if (
+    !isPrivate &&
+    !readme.includes(`yarn add @metamask/${workspaceBasename}`)
+  ) {
     workspace.error(
       `The README.md does not contain an example of how to install the package using Yarn (\`yarn add @metamask/${workspaceBasename}\`). Please add an example.`,
     );
   }
 
-  if (!readme.includes(`npm install @metamask/${workspaceBasename}`)) {
+  if (
+    !isPrivate &&
+    !readme.includes(`npm install @metamask/${workspaceBasename}`)
+  ) {
     workspace.error(
       `The README.md does not contain an example of how to install the package using npm (\`npm install @metamask/${workspaceBasename}\`). Please add an example.`,
     );
