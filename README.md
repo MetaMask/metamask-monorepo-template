@@ -52,7 +52,6 @@ linkStyle default opacity:0.5
   signatures(["@metamask/signatures"]);
   letter_crafter --> greetings;
   letter_crafter --> signatures;
-  signatures --> greetings;
 ```
 
 <!-- end dependency graph -->

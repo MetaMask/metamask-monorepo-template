@@ -12,5 +12,5 @@
     { "path": "./packages/signatures" }
   ],
   "files": [],
-  "include": ["./scripts"]
+  "include": ["./scripts", "./knip.config.mts"]
 }
