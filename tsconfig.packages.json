@@ -9,12 +9,17 @@
      * Here we ensure that TypeScript resolves `@metamask/*` imports to the
      * uncompiled source code for packages that live in this repo.
      *
+     * `${configDir}` is the directory of the configuration that extends this
+     * one, which is the package directory. It replaces the `baseUrl` option
+     * that each package declared before, because TypeScript 7 removed
+     * `baseUrl`.
+     *
      * Vitest applies these same paths through the `resolve.tsconfigPaths`
      * option in `vitest.config.packages.mjs`, so there is nothing to keep in
      * sync by hand.
      */
     "paths": {
-      "@metamask/*": ["../*/src/index.ts"]
+      "@metamask/*": ["${configDir}/../*/src/index.ts"]
     }
   }
 }

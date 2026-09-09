@@ -8,7 +8,6 @@
    */
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./",
     "lib": ["ES2023"],
     "noEmit": true,
     "noUncheckedIndexedAccess": true
