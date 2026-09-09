@@ -1,4 +1,4 @@
-import { generateSignature } from '.';
+import { generateSignature } from './index.js';
 
 describe('signatureHelpers', () => {
   describe('generateSignature', () => {

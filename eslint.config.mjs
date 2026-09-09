@@ -2,6 +2,7 @@ import base, { createConfig } from '@metamask/eslint-config';
 import jest from '@metamask/eslint-config-jest';
 import nodejs from '@metamask/eslint-config-nodejs';
 import typescript from '@metamask/eslint-config-typescript';
+import node from 'eslint-plugin-n';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -136,6 +137,39 @@ const config = createConfig([
     files: ['**/*.mjs'],
     languageOptions: {
       sourceType: 'module',
+    },
+  },
+  // Prevent cross-package relative imports
+  {
+    files: ['packages/*/src/**/*.ts'],
+    ignores: ['**/*.test.ts', '**/tests/**/*.ts'],
+    rules: {
+      'import-x/no-relative-packages': 'error',
+    },
+  },
+  {
+    // `import-x/extensions` doesn't support using ".js" for TypeScript
+    // files(?), so we load the `n` plugin and use
+    // `n/file-extension-in-import` instead.
+    plugins: { n: node },
+
+    rules: {
+      'n/file-extension-in-import': ['error', 'always'],
+      'import-x/extensions': [
+        'error',
+        {
+          js: 'ignorePackages',
+          ts: 'never',
+          tsx: 'never',
+          json: 'always',
+        },
+      ],
+      'import-x/no-useless-path-segments': [
+        'error',
+        {
+          noUselessIndex: false,
+        },
+      ],
     },
   },
 ]);

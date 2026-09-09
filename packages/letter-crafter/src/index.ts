@@ -1,1 +1,1 @@
-export { craftThankYouLetter } from './letter-crafter';
+export { craftThankYouLetter } from './letter-crafter.js';

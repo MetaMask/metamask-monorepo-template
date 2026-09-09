@@ -1,4 +1,4 @@
-import { generateGreeting } from '.';
+import { generateGreeting } from './index.js';
 
 describe('greetings', () => {
   describe('generateGreeting', () => {
