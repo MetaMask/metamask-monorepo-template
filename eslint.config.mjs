@@ -12,28 +12,81 @@ const config = createConfig([
   ...base,
   {
     ignores: [
+      '**/coverage/**',
       '**/dist/**',
       '**/docs/**',
-      '**/coverage/**',
-      'merged-packages/**',
-      '.yarn/**',
-      'scripts/create-package/package-template/**',
-      'yarn.config.cjs',
       '.pnp.*',
+      '.yarn/**',
+      'merged-packages/**',
+      'scripts/create-package/package-template/**',
     ],
+  },
+  {
+    linterOptions: {
+      reportUnusedDisableDirectives: 'error',
+    },
+  },
+  {
+    rules: {
+      // TODO: Re-enable this rule
+      // Enabling it with error suppression breaks `--fix`, because the autofixer for this rule
+      // does not work very well.
+      'jsdoc/require-jsdoc': 'off',
+    },
+    settings: {
+      jsdoc: {
+        mode: 'typescript',
+      },
+    },
   },
   {
     files: [
       '**/*.{js,cjs,mjs}',
       '**/*.test.{js,ts}',
       '**/tests/**/*.{js,ts}',
-      'scripts/*.ts',
-      'scripts/create-package/**/*.ts',
+      'scripts/**/*.{ts,mts}',
     ],
+    ignores: ['scripts/create-package/package-template/**/*.ts'],
     extends: [nodejs],
+  },
+  {
+    files: ['**/*.{js,cjs}'],
+    languageOptions: {
+      sourceType: 'script',
+      ecmaVersion: 2020,
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.mts'],
+    extends: [typescript],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: configDirName,
+      },
+    },
+    settings: {
+      node: {
+        version: `^${NODE_LTS_VERSION}`,
+      },
+    },
     rules: {
-      // We often use synchronous methods in scripts.
-      'n/no-sync': 'off',
+      // This rule does not detect multiple imports of the same file where types
+      // are being imported in one case and runtime values are being imported in
+      // another.
+      'import-x/no-duplicates': 'off',
+
+      // We sometimes use enums as substitutes for strings.
+      // Consider disabling this rule in `@metamask/eslint-config`.
+      '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+
+      // Enable rules that are disabled in `@metamask/eslint-config-typescript`.
+      '@typescript-eslint/no-explicit-any': 'error',
+
+      // TODO: Re-enable these rules
+      // Enabling them with error suppression breaks `--fix`, because the autofixer for these rules
+      // do not work very well.
+      'jsdoc/check-tag-names': 'off',
+      'jsdoc/require-jsdoc': 'off',
     },
   },
   {
@@ -44,47 +97,12 @@ const config = createConfig([
       // functions.
       // Consider disabling this rule in `@metamask/eslint-config`.
       'jest/no-conditional-in-test': 'off',
-    },
-    settings: {
-      node: {
-        version: `^${NODE_LTS_VERSION}`,
-      },
-    },
-  },
-  {
-    files: ['**/*.{js,cjs,mjs}'],
-    languageOptions: {
-      sourceType: 'script',
-      ecmaVersion: 2020,
-    },
-  },
-  {
-    files: ['**/*.ts'],
-    extends: [typescript],
-    settings: {
-      node: {
-        version: `^${NODE_LTS_VERSION}`,
-      },
-    },
-    languageOptions: {
-      parserOptions: {
-        tsconfigRootDir: configDirName,
-        project: './tsconfig.json',
-        projectService: {
-          allowDefaultProject: ['./scripts/*.ts'],
-        },
-      },
-    },
-    rules: {
-      // We sometimes use enums as substitutes for strings.
-      // Consider disabling this rule in `@metamask/eslint-config`.
-      '@typescript-eslint/no-unsafe-enum-comparison': 'off',
-    },
-  },
-  {
-    files: ['tests/setupAfterEnv/matchers.ts'],
-    languageOptions: {
-      sourceType: 'script',
+
+      // TODO: Upgrade these from warning to error in shared config
+      'jest/expect-expect': 'error',
+      'jest/no-alias-methods': 'error',
+      'jest/no-commented-out-tests': 'error',
+      'jest/no-disabled-tests': 'error',
     },
   },
   // This should really be in `@metamask/eslint-config-typescript`

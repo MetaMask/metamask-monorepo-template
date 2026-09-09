@@ -34,7 +34,6 @@ function getParsedArgv(
 } {
   return {
     // `yargs` places non-options in `_`.
-    // eslint-disable-next-line @typescript-eslint/naming-convention
     _: [],
     $0: 'create-package',
     name: `@metamask/${name}`,

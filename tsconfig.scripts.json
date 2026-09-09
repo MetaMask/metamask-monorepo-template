@@ -1,7 +1,18 @@
 {
+  /**
+   * This configuration is intended for the `scripts/` directory, both for linting and for editor
+   * TypeScript-related features.
+   *
+   * This is extended by the `tsconfig.json` file in `scripts/create-package/`, which is actively
+   * used to support TypeScript-related editor features in that directory.
+   */
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true
+    "baseUrl": "./",
+    "lib": ["ES2023"],
+    "noEmit": true,
+    "noUncheckedIndexedAccess": true
   },
-  "exclude": ["**/packages", "**/node_modules"]
+  "include": ["./scripts/**/*.ts", "./scripts/**/*.mts"],
+  "exclude": ["**/node_modules"]
 }

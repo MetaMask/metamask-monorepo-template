@@ -11,17 +11,16 @@ ignores:
   - '@metamask/auto-changelog'
   - '@metamask/create-release-branch'
   - 'depcheck'
-  - 'eslint-interactive'
   - 'rimraf'
   - 'simple-git-hooks'
   - 'ts-node'
   - 'typedoc'
   # Ignore plugins for tools
   - '@typescript-eslint/*'
-  - 'babel-jest'
   - 'eslint-config-*'
   - 'eslint-plugin-*'
   - 'jest-silent-reporter'
+  - 'ts-jest'
   - 'prettier-plugin-packagejson'
   - 'typescript-eslint'
   # Ignore dependencies imported implicitly by tools

@@ -10,6 +10,7 @@
 // format, but also check the presence of certain files as well.
 
 /** @type {import('@yarnpkg/types')} */
+const { hasProperty } = require('@metamask/utils');
 const { defineConfig } = require('@yarnpkg/types');
 const { readFile } = require('fs/promises');
 const { get } = require('lodash');
@@ -51,7 +52,8 @@ module.exports = defineConfig({
       const workspaceBasename = getWorkspaceBasename(workspace);
       const isChildWorkspace = workspace.cwd !== '.';
       const isPrivate =
-        'private' in workspace.manifest && workspace.manifest.private === true;
+        hasProperty(workspace.manifest, 'private') &&
+        workspace.manifest.private === true;
       const dependenciesByIdentAndType = getDependenciesByIdentAndType(
         Yarn.dependencies({ workspace }),
       );
@@ -218,7 +220,7 @@ module.exports = defineConfig({
       if (isChildWorkspace) {
         workspace.unset('packageManager');
       } else {
-        expectWorkspaceField(workspace, 'packageManager', 'yarn@4.9.2');
+        expectYarnPackageManager(workspace);
       }
 
       // All packages must specify a minimum Node.js version of 18.18.
@@ -365,7 +367,7 @@ async function workspaceFileExists(workspace, path) {
   try {
     await getWorkspaceFile(workspace, path);
   } catch (error) {
-    if ('code' in error && error.code === 'ENOENT') {
+    if (hasProperty(error, 'code') && error.code === 'ENOENT') {
       return false;
     }
     throw error;
@@ -731,8 +733,8 @@ function expectPeerDependenciesAlsoListedAsDevDependencies(
 /**
  * Filter out dependency ranges which are not to be considered in `expectConsistentDependenciesAndDevDependencies`.
  *
- * @param {string} dependencyIdent - The dependency being filtered for
- * @param {Map<string, Dependency>} dependenciesByRange - Dependencies by range
+ * @param {string} dependencyIdent - The dependency being filtered for.
+ * @param {Map<string, Dependency>} dependenciesByRange - Dependencies by range.
  * @returns {Map<string, Dependency>} The resulting map.
  */
 function getInconsistentDependenciesAndDevDependencies(
@@ -791,6 +793,29 @@ function expectConsistentDependenciesAndDevDependencies(Yarn) {
         );
       }
     }
+  }
+}
+
+/**
+ * Expect that the workspace has a package manager set, and that it is Yarn with
+ * a sha256 hash.
+ *
+ * @param {Workspace} workspace - The workspace to check.
+ */
+function expectYarnPackageManager(workspace) {
+  expectWorkspaceField(workspace, 'packageManager');
+
+  const { packageManager } = workspace.manifest;
+  if (!packageManager.startsWith('yarn@')) {
+    workspace.error(
+      `Expected packageManager to start with "yarn@<version>", but got "${packageManager}".`,
+    );
+  }
+
+  if (!packageManager.includes('sha256')) {
+    workspace.error(
+      `Expected packageManager to include a sha256 hash, but got "${packageManager}".`,
+    );
   }
 }
 

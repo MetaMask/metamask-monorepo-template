@@ -1,5 +1,6 @@
+import * as commentJson from 'comment-json';
 import execa from 'execa';
-import { existsSync, promises as fs } from 'fs';
+import { promises as fs } from 'fs';
 import path from 'path';
 import { format as prettierFormat } from 'prettier';
 import type { Options as PrettierOptions } from 'prettier';
@@ -75,8 +76,8 @@ export async function readMonorepoFiles(): Promise<MonorepoFileData> {
   ]);
 
   return {
-    tsConfig: JSON.parse(tsConfig) as Tsconfig,
-    tsConfigBuild: JSON.parse(tsConfigBuild) as Tsconfig,
+    tsConfig: commentJson.parse(tsConfig) as unknown as Tsconfig,
+    tsConfigBuild: commentJson.parse(tsConfigBuild) as unknown as Tsconfig,
     nodeVersions: (JSON.parse(packageJson) as PackageJson).engines.node,
   };
 }
@@ -93,8 +94,13 @@ export async function finalizeAndWriteData(
   monorepoFileData: MonorepoFileData,
 ): Promise<void> {
   const packagePath = path.join(PACKAGES_PATH, packageData.directoryName);
-  if (existsSync(packagePath)) {
+  try {
+    await fs.stat(packagePath);
     throw new Error(`The package directory already exists: ${packagePath}`);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') {
+      throw error;
+    }
   }
 
   console.log('Writing package and monorepo files...');
@@ -106,11 +112,11 @@ export async function finalizeAndWriteData(
   updateTsConfigs(packageData, monorepoFileData);
   await writeJsonFile(
     REPO_TS_CONFIG,
-    JSON.stringify(monorepoFileData.tsConfig),
+    commentJson.stringify(monorepoFileData.tsConfig, null, 2),
   );
   await writeJsonFile(
     REPO_TS_CONFIG_BUILD,
-    JSON.stringify(monorepoFileData.tsConfigBuild),
+    commentJson.stringify(monorepoFileData.tsConfigBuild, null, 2),
   );
 
   // Postprocess

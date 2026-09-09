@@ -51,14 +51,13 @@
     "@metamask/signatures": "^0.0.0"
   },
   "devDependencies": {
-    "@metamask/auto-changelog": "^3.1.0",
-    "@ts-bridge/cli": "^0.5.1",
-    "@types/jest": "^27.4.1",
+    "@metamask/auto-changelog": "^6.1.0",
+    "@ts-bridge/cli": "^0.6.4",
+    "@types/jest": "^30.0.0",
     "deepmerge": "^4.2.2",
-    "jest": "^27.5.1",
-    "jest-silent-reporter": "^0.5.0",
-    "ts-jest": "^27.1.4",
-    "typescript": "~5.2.2"
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.11",
+    "typescript": "~5.3.3"
   },
   "engines": {
     "node": "^18.18 || >=20"
