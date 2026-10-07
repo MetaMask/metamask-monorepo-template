@@ -5,6 +5,10 @@ inputs:
   commit-starts-with:
     description: "Validate that the release commit starts with a string in this comma-separated list. Use '[version]' to refer to the current release version."
     required: true
+  wiz-sensor-enabled:
+    description: "Value of vars.WIZ_SENSOR_ENABLED. The string true enables the sensor. Empty skips it."
+    required: false
+    default: ""
   wiz-sensor-token:
     description: "Optional Wiz GitHub runner sensor token, from secrets.WIZ_SENSOR_TOKEN. Empty skips the sensor."
     required: false
@@ -29,6 +33,7 @@ runs:
     - name: Checkout and setup environment
       uses: MetaMask/action-checkout-and-setup@v3
       with:
+        wiz-sensor-enabled: ${{ inputs.wiz-sensor-enabled }}
         wiz-sensor-token: ${{ inputs.wiz-sensor-token }}
         is-high-risk-environment: false
         skip-install: true
