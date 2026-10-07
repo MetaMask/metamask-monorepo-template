@@ -78,6 +78,8 @@ jobs:
     name: Lint, build, and test
     needs: check-workflows
     uses: ./.github/workflows/lint-build-test.yml
+    secrets:
+      WIZ_SENSOR_TOKEN: ${{ secrets.WIZ_SENSOR_TOKEN }}
 
   check-release:
     name: Check release
@@ -97,6 +99,8 @@ jobs:
         uses: ./.github/actions/check-release
         with:
           commit-starts-with: ${{ vars.RELEASE_COMMIT_PREFIX }}
+          wiz-sensor-enabled: ${{ vars.WIZ_SENSOR_ENABLED }}
+          wiz-sensor-token: ${{ secrets.WIZ_SENSOR_TOKEN }}
 
   is-release:
     name: Determine whether this is a release merge commit
@@ -122,6 +126,7 @@ jobs:
     secrets:
       NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      WIZ_SENSOR_TOKEN: ${{ secrets.WIZ_SENSOR_TOKEN }}
 
   all-jobs-complete:
     name: All jobs complete
