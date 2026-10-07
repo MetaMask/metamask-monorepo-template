@@ -151,6 +151,7 @@ jobs:
       - name: Set up environment
         uses: MetaMask/action-checkout-and-setup@v3
         with:
+          wiz-sensor-token: ${{ secrets.WIZ_SENSOR_TOKEN }}
           is-high-risk-environment: false
 
       - name: Overlay relevant files from current pull request
